@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bortakuz <bortakuz@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 10:32:41 by bortakuz          #+#    #+#             */
-/*   Updated: 2023/09/18 12:49:25 by bortakuz         ###   ########.fr       */
+/*   Created: 2023/01/24 18:44:08 by envyilma          #+#    #+#             */
+/*   Updated: 2023/09/09 15:00:14 by bortakuz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philosophers.h"
-#include <stdlib.h>
-
-int	main(int ac, char **av)
+int	ft_atoi(const char *str)
 {
-	t_philosophers	*data;
+	int	cnt;
+	int	neg;
+	int	num;
 
-	data = NULL;
-	checker(ac, av);
-	set_all_argumants(data, av);
-	return (0);
+	cnt = 0;
+	neg = 1;
+	num = 0;
+	if (!str)
+		return (0);
+	while ((str[cnt] >= '\t' && str[cnt] <= '\r') || str[cnt] == ' ')
+		cnt++;
+	if (str[cnt] == '-')
+		neg = -1;
+	if (str[cnt] == '+' || str[cnt] == '-')
+		cnt++;
+	while (str[cnt] >= '0' && str[cnt] <= '9')
+	{
+		num = (str[cnt] - '0') + (num * 10);
+		cnt++;
+	}
+	return (num * neg);
 }

@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_managament.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bortakuz <bortakuz@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 10:32:41 by bortakuz          #+#    #+#             */
-/*   Updated: 2023/09/18 12:49:25 by bortakuz         ###   ########.fr       */
+/*   Created: 2023/09/08 10:46:09 by bortakuz          #+#    #+#             */
+/*   Updated: 2023/09/12 14:04:35 by bortakuz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
-#include <stdlib.h>
+#include <stdio.h>
 
-int	main(int ac, char **av)
+void	print_error(char *massage)
 {
-	t_philosophers	*data;
+	printf("Error\n%s\n", massage);
+	exit(-1);
+}
 
-	data = NULL;
-	checker(ac, av);
-	set_all_argumants(data, av);
-	return (0);
+void	exit_philo(t_data *data)
+{
+	(void)data;
+	exit(0);
 }
