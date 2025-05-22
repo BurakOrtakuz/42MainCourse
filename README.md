@@ -1,40 +1,30 @@
-# get_next_line
+# ft_printf
 
-> A 42 school project to implement a function that reads a line from a file descriptor, handling memory and buffering manually.
+> A 42 school project to reimplement the standard C `printf` function with limited features and full manual formatting.
 
 ## 📚 Description
 
-The goal of this project is to write a function named `get_next_line` that reads from a file descriptor one line at a time, handling the internal buffer, partial reads, and memory allocation without using the standard `getline` function.
-
-This function must:
-- Return a full line ending with a newline character `\n`, if one exists.
-- Be called repeatedly to get every line of a file until EOF.
-- Work with different file descriptors, even interleaved.
+The `ft_printf` project is a custom implementation of the standard C library's `printf` function. It replicates formatted output to the standard output using a restricted subset of specifiers.
 
 This project teaches:
-- Low-level file reading with `read()`
-- Managing static variables
-- Handling memory and buffers safely in C
-- Edge cases such as EOF, empty lines, or read errors
+- Variadic functions in C (`stdarg.h`)
+- Handling and parsing format strings
+- Converting different data types to string
+- Managing output and memory manually
 
 ## 🛠️ Usage
 
-To use `get_next_line`, include the header in your project and compile it along with your source.
+Include `ft_printf.h` in your code and link your compiled files:
 
 ```c
-#include "get_next_line.h"
+#include "ft_printf.h"
 
 int main(void)
 {
-    int fd = open("example.txt", O_RDONLY);
-    char *line;
+    int len;
 
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
+    len = ft_printf("Hello, %s! The answer is %d\n", "world", 42);
+    ft_printf("Printed %d characters.\n", len);
     return 0;
 }
 ```
@@ -42,52 +32,66 @@ int main(void)
 ## 📄 Function Prototype
 
 ```c
-char *get_next_line(int fd);
+int ft_printf(const char *format, ...);
 ```
 
-- **fd**: The file descriptor to read from.
-- **Returns**: A pointer to the next line, or `NULL` if EOF is reached or if `read()` returns an error.
+- **format**: A C string that contains the text to be written, optionally including format specifiers.
+- **...**: A variable number of arguments to format and print.
+- **Returns**: The total number of characters printed.
+
+## ✅ Supported Conversions
+
+The following format specifiers are supported:
+
+| Specifier | Description              |
+|-----------|--------------------------|
+| `%c`      | Character                |
+| `%s`      | String                   |
+| `%p`      | Pointer address          |
+| `%d`      | Signed decimal integer   |
+| `%i`      | Signed decimal integer   |
+| `%u`      | Unsigned decimal integer |
+| `%x`      | Hexadecimal (lowercase)  |
+| `%X`      | Hexadecimal (uppercase)  |
+| `%%`      | A literal percent sign   |
 
 ## 🔍 How it works
 
-- Uses `read()` to buffer input into memory.
-- Appends and trims strings manually to extract lines.
-- Handles static memory for multiple file descriptors.
-- Does **not** use standard library functions like `getline()`.
-
-> 🧠 You can read the official man page for `getline()` here:  
-> https://man7.org/linux/man-pages/man3/getline.3.html
+- Uses `va_start`, `va_arg`, and `va_end` to handle variable arguments.
+- Parses the format string to identify and process specifiers.
+- Converts data types to strings using custom functions.
+- Outputs characters using `write()` for maximum control.
 
 ## ⚙️ Compilation
 
 Use the following command to compile:
 
 ```bash
-gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c main.c
+gcc -Wall -Wextra -Werror ft_printf.c ft_printf_utils.c main.c
 ```
 
-You can define `BUFFER_SIZE` with `-D BUFFER_SIZE=n` to change how many bytes are read at once.
+You may need to adjust the file list depending on how you've split your code.
 
 ## 📁 File Structure
 
 ```
-get_next_line/
-├── get_next_line.c        # Main function logic
-├── get_next_line.h        # Header file
-├── get_next_line_utils.c  # Helper functions (e.g., string manipulation)
-├── main.c                 # Optional test file
+ft_printf/
+├── ft_printf.c        # Main printf implementation
+├── ft_printf.h        # Header file
+├── ft_printf_utils.c  # Helper functions (e.g., integer/hex conversion)
+├── main.c             # Optional test file
 ```
 
 ## ✅ Features
 
-- Works with multiple file descriptors
-- Handles large files and arbitrary buffer sizes
-- No memory leaks (checked with Valgrind)
+- Accurate formatted output for supported specifiers
+- Compatible with standard output via `write()`
+- Returns correct character count
+- Handles null strings and pointer values safely
 
 ## 🚫 Limitations
 
-- Doesn't support reading from stdin if `BUFFER_SIZE` is very small (can be optimized)
-- Undefined behavior if `read()` is interrupted or returns null (e.g., closed file descriptor)
+- Does not support width, precision, or flags (e.g. `%-5s`, `%.2f`)
+- Limited to specifiers listed above
 
 ---
-

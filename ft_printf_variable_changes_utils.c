@@ -1,28 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_printf_variable_changes_utils.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bortakuz <bortakuz@student.42kocaeli.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 17:16:41 by bortakuz          #+#    #+#             */
-/*   Updated: 2023/07/12 10:13:44 by bortakuz         ###   ########.fr       */
+/*   Created: 2023/05/09 22:55:42 by bortakuz          #+#    #+#             */
+/*   Updated: 2023/05/10 07:26:55 by bortakuz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "ft_printf.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5000
-# endif
+void	ft_bzero(void *s, size_t n)
+{
+	ft_memset(s, 0, n);
+}
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	ft_abs(int nbr)
+{
+	if (nbr < 0)
+		return (-nbr);
+	else
+		return (nbr);
+}
 
-char	*get_next_line(int fd);
-int		ft_strlen(char *s);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(const char *s, int c);
-#endif
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+
+	if (!b)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		((unsigned char *)b)[i] = (unsigned char)c;
+		i++;
+	}
+	return (b);
+}
+
+size_t	ft_putchar(char s)
+{
+	write(1, &s, 1);
+	return (1);
+}
