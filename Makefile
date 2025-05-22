@@ -1,25 +1,31 @@
-NAME = push_swap
-FLAG = -Wall -Wextra -Werror
-SRC = stack.c \
-		r_operators.c \
-		rr_operators.c \
-		s_p_operators.c \
-		utils.c \
-		ft_split.c \
-		error_management.c \
-		sort_utils.c \
-		push_swap.c \
-		check_data.c
+FLAG = -Wall -Wextra -Werror -g
 
-OBJ = $(SRC:.c=.o)  
-
-all: $(NAME)
-$(NAME):
-	gcc $(FLAG) -c $(SRC)
-	gcc $(FLAG) $(OBJ) main.c -o $(NAME)
+all:
+	@echo Derlendi
+	@gcc $(FLAG) server.c -o server
+	@gcc $(FLAG) client.c -o client
+	@rm -rf server.dSYM
+	@rm -rf client.dSYM
+	@rm -rf server_bonus
+	@rm -rf client_bonus
+bonus:
+	@echo Bonus derlendi
+	@gcc $(FLAG) server_bonus.c -o server_bonus
+	@gcc $(FLAG) client_bonus.c -o client_bonus
+	@rm -rf server_bonus.dSYM
+	@rm -rf client_bonus.dSYM
+	@rm -rf server
+	@rm -rf client
+run: all
+	@./server
+brun: bonus
+	@./server_bonus
 clean:
-	/bin/rm -f  *.o
+	@echo Temizlendi
+	@rm -rf server
+	@rm -rf client
+	@rm -rf server_bonus
+	@rm -rf client_bonus
 fclean: clean
-	/bin/rm -f $(NAME)
 re: fclean all
-.PHONY: all bonus clean fclean reerror_management.c
+.PHONY: all bonus clean fclean
