@@ -1,20 +1,48 @@
-.PHONY: all clean fclean stop up
+NAME	= ircserv
 
-all: file up
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
-file:
-	test -d /home/bortakuz/data || mkdir /home/bortakuz/data
-	test -d /home/bortakuz/data/wordpress || mkdir /home/bortakuz/data/wordpress
-	test -d /home/bortakuz/data/mariadb || mkdir /home/bortakuz/data/mariadb
+SRC		=	./srcs/Bot.cpp \
+			./srcs/Channel.cpp \
+			./srcs/Client.cpp \
+			./srcs/GuessBot.cpp \
+			./srcs/main.cpp \
+			./srcs/Server.cpp \
+			./srcs/ServerUtils.cpp \
+			./srcs/commands/BOT.cpp \
+			./srcs/commands/CAP.cpp \
+			./srcs/commands/JOIN.cpp \
+			./srcs/commands/KICK.cpp \
+			./srcs/commands/MODE.cpp \
+			./srcs/commands/NICK.cpp \
+			./srcs/commands/PART.cpp \
+			./srcs/commands/PASS.cpp \
+			./srcs/commands/PRIVMSG.cpp \
+			./srcs/commands/QUIT.cpp \
+			./srcs/commands/USER.cpp \
+			./srcs/commands/Utils.cpp \
+			./srcs/commands/WHO.cpp \
+
+OBJ = $(SRC:.cpp=.o)
+
+CC		=	c++
+
+RM		=	rm -rf
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+clean:
+	@$(RM) $(OBJ)
+
+fclean : clean
+	@$(RM) $(NAME)
 
 re: fclean all
 
-clean:
-	@docker-compose -f srcs/docker-compose.yml down
+run: all 
+	./$(NAME);
 
-fclean: clean
-	@docker system prune -af
-	@rm -rf /home/bortakuz/data
-
-up:
-	docker-compose -f ./srcs/docker-compose.yml up --build
+.PHONY: all clean fclean re run
