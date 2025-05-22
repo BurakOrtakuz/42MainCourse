@@ -1,0 +1,315 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2024/12/05 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2024/12/08 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+LOGIN__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART
+{
+	    WIDTH: -WEBKIT-FILL-AVAILABLE;
+	   HEIGHT: -WEBKIT-FILL-AVAILABLE;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART:NTH-CHILD(1)
+{
+	      WIDTH: INITIAL;
+	    DISPLAY: FLEX;
+	    PADDING: 18PX;
+	ALGIN-ITEMS: CENTER;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART:NTH-CHILD(1) IMG
+{
+	         WIDTH: 48PX;
+	        HEIGHT: 48PX;
+	POINTER-EVENTS: NONE;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART:NTH-CHILD(2) SPAN
+{
+	DISPLAY: FLEX;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART:NTH-CHILD(3)
+{
+	            GAP: 6PX;
+	          WIDTH: INITIAL;
+	        PADDING: 18PX;
+	        DISPLAY: FLEX;
+	    ALIGN-ITEMS: CENTER;
+	JUSTIFY-CONTENT: START;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART .TABLE
+{
+	                  GAP: 6PX;
+	                WIDTH: 100%;
+	              DISPLAY: GRID;
+	            FLEX-WRAP: WRAP;
+	GRID-TEMPLATE-COLUMNS: AUTO 1FR;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART .TABLE SPAN
+{
+	        DISPLAY: FLEX; 
+	    ALIGN-ITEMS: CENTER;
+	 POINTER-EVENTS: NONE;
+	JUSTIFY-CONTENT: FLEX-START;
+}
+
+LOGIN__CONTAINER .__LOGIN__PART .TABLE TEXTAREA
+{
+	WIDTH: 100%;
+}
+</STYLE>
+
+<LOGIN__CONTAINER>
+ <DIV CLASS="__LOGIN__PART">
+  <IMG SRC="${PWD}NETWORK_PCS.png" ALT="LOGIN INCON"/>
+ </DIV>
+ <DIV CLASS="__LOGIN__PART">
+  <BR/>
+  <SPAN>${LANG.LOGIN.HEADER}</SPAN>
+  <BR/>
+  <DIV CLASS="TABLE">
+   <SPAN>${LANG.LOGIN.SPAN_USERNAME}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.LOGIN.PLACEHOLDER_USERNAME}"
+    ID="__${PID}__NAME_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__NAME_EVENT(event)"
+   ></TEXTAREA>
+   <SPAN>${LANG.LOGIN.SPAN_PASSWORD}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.LOGIN.PLACEHOLDER_PASSWORD}"
+    ID="__${PID}__PASSWORD_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__PASSWORD_EVENT(event, this)"
+   ></TEXTAREA>
+  </DIV>
+ </DIV>
+ <DIV CLASS="__LOGIN__PART">
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ID="__${PID}__LOGIN_WITH_42_BUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__LOGIN_WITH_42(event)"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__LOGIN_WITH_42(event)"
+  >${LANG.LOGIN.LOGIN_WITH_42_BUTTON}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ID="__${PID}__REGISTER_BUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__GOTO_REGISTER(event)"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__GOTO_REGISTER(event)"
+  >${LANG.LOGIN.REGISTER_BUTTON}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__LOGIN_SIGNAL(event)"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__LOGIN_SIGNAL(event)"
+  >${LANG.BUTTON.OK}</A>
+ </DIV>
+</LOGIN__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+let __${PID}__NAME_INPUT;
+let __${PID}__PASSWORD_INPUT;
+let __${PID}__REGISTER_BUTTON;
+let __${PID}__LOGIN_WITH_42_BUTTON;
+
+__${PID}__NAME_INPUT =
+	document.getElementById("__${PID}__NAME_INPUT");
+__${PID}__PASSWORD_INPUT =
+	document.getElementById("__${PID}__PASSWORD_INPUT");
+__${PID}__REGISTER_BUTTON =
+	document.getElementById("__${PID}__REGISTER_BUTTON");
+__${PID}__LOGIN_WITH_42_BUTTON =
+	document.getElementById("__${PID}__LOGIN_WITH_42_BUTTON");
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+	// NULL
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+const __${PID}__PASSWORD_VALUE = [];
+
+function
+	__${PID}__GOTO_REGISTER(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	__${PID}__REGISTER_BUTTON.classList.add("DISABLED");
+	__${PID}__REGISTER_BUTTON.blur();
+	__${PID}__REGISTER_BUTTON.setAttribute("TABINDEX", -1);
+
+
+	RUN_AND_WAIT_APP("${PID}", "REGISTER");
+}
+
+async function
+	__${PID}__LOGIN_SIGNAL(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	if (
+		__${PID}__NAME_INPUT.value.trim() === "" ||
+		__${PID}__PASSWORD_VALUE.join('').trim() === ""
+	)
+	{
+		LOG(
+			__LANG__[LANG].LOGIN.ERROR.INPUTS_NULL.MESSAGE,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].LOGIN.ERROR.INPUTS_NULL.TITLE,
+			},
+			"${PID}"
+		);
+		return ;
+	}
+
+	const RESPONSE =
+		await AJAX_SEND(
+			"/ajax/usermanagement/login/",
+			{
+				USERNAME: __${PID}__NAME_INPUT.value,
+				PASSWORD: SHA256(__${PID}__PASSWORD_VALUE.join(''))
+			}
+	);
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0): // SUCCESS
+		{
+			CLOSE_WINDOW("${PID}");
+			START_DESKTOP();
+		}
+		break ;
+		case (1): // USERNAME OR PASSWORD IS INCORRECT
+		{
+			LOG(
+				__LANG__[LANG].LOGIN.ERROR._1.MESSAGE,
+				"WARNING",
+				{
+					TITLE: __LANG__[LANG].LOGIN.ERROR._1.TITLE
+				},
+				"${PID}"
+			);
+		}
+		break ;
+		case (2): // INPUT FORMAT ERROR
+		{
+			LOG(
+				__LANG__[LANG].LOGIN.ERROR._2.MESSAGE,
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].LOGIN.ERROR._2.TITLE
+				},
+				"${PID}"
+			);
+		}
+		break ;
+		case (4): // TRY LIMIT REACHED
+		{
+			LOG(
+				__LANG__[LANG].LOGIN.ERROR._4.MESSAGE,
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].LOGIN.ERROR._4.TITLE
+				},
+				"${PID}"
+			);
+		}
+		break ;
+		case (8): // 2FA
+		{
+			RUN_AND_WAIT_APP("${PID}", "2FA", {},
+				{
+					USERNAME: __${PID}__NAME_INPUT.value
+				}
+			);
+		}
+		break ;
+		default: // SOMETHING WENT WRONG
+		{
+			LOG(
+				__LANG__[LANG].LOGIN.ERROR._3.MESSAGE +
+					RESPONSE.THIS.error_message,
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].LOGIN.ERROR._3.TITLE
+				},
+				"${PID}"
+			);
+		}
+		break ;
+	}
+}
+
+function
+	__${PID}__PASSWORD_EVENT(EVENT, TEXTAREA)
+{
+	if (EVENT.code === "Enter")
+	{
+		__${PID}__LOGIN_SIGNAL();
+		EVENT.preventDefault(); // DISABLE PUTTING A NEW LINE
+	}
+	else
+	{
+		if (EVENT.key.length === 1)
+			__${PID}__PASSWORD_VALUE.push(EVENT.key);
+		else if (EVENT.key === 'Backspace')
+			__${PID}__PASSWORD_VALUE.pop();
+
+		EVENT.preventDefault(); // DISABLE PUTTING A NEW LINE
+		TEXTAREA.value = '*'.repeat(__${PID}__PASSWORD_VALUE.length);
+	}
+}
+
+function
+	__${PID}__NAME_EVENT(EVENT)
+{
+	if (EVENT.code === "Enter")
+	{
+		__${PID}__PASSWORD_INPUT.focus();
+		EVENT.preventDefault();  // DISABLE PUTTING A NEW LINE
+	}
+}
+
+async function
+	__${PID}__LOGIN_WITH_42(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	if (await OAUTH42("${PID}"))
+	{
+		CLOSE_WINDOW("${PID}");
+		START_DESKTOP();
+	}
+}
+</SCRIPT>

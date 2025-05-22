@@ -1,0 +1,7 @@
+{
+	"WIDTH": 484,
+	"HEIGHT": 250,
+	"TITLE": "${LANG.REGISTER.TITLE}",
+	"ICON": true,
+	"BUTTON_CLOSE": true
+}

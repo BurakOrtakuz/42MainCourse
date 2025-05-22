@@ -1,0 +1,301 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2025/01/18 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2025/01/18 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+TWO_FA__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+TWO_FA__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART
+{
+	    WIDTH: -WEBKIT-FILL-AVAILABLE;
+	   HEIGHT: -WEBKIT-FILL-AVAILABLE;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART:NTH-CHILD(1)
+{
+	      WIDTH: INITIAL;
+	    DISPLAY: FLEX;
+	    PADDING: 18PX;
+	ALGIN-ITEMS: CENTER;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART:NTH-CHILD(1) IMG
+{
+	         WIDTH: 48PX;
+	        HEIGHT: 48PX;
+	POINTER-EVENTS: NONE;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART:NTH-CHILD(2) SPAN
+{
+	DISPLAY: FLEX;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART:NTH-CHILD(3)
+{
+	            GAP: 6PX;
+	          WIDTH: INITIAL;
+	        PADDING: 18PX;
+	        DISPLAY: FLEX;
+	    ALIGN-ITEMS: CENTER;
+	JUSTIFY-CONTENT: START;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART .TABLE
+{
+	                  GAP: 6PX;
+	                WIDTH: 100%;
+	              DISPLAY: GRID;
+	            FLEX-WRAP: WRAP;
+	GRID-TEMPLATE-COLUMNS: AUTO 1FR;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART .TABLE SPAN
+{
+	        DISPLAY: FLEX; 
+	    ALIGN-ITEMS: CENTER;
+	 POINTER-EVENTS: NONE;
+	JUSTIFY-CONTENT: FLEX-START;
+}
+
+TWO_FA__CONTAINER .__TWO_FA__PART .TABLE TEXTAREA
+{
+	WIDTH: 100%;
+}
+</STYLE>
+<TWO_FA__CONTAINER ID="__${PID}__">
+ <DIV CLASS="__TWO_FA__PART">
+  <IMG SRC="${PWD}KEY_LEFT.png" ALT="LOGIN INCON"/>
+ </DIV>
+ <DIV CLASS="__TWO_FA__PART">
+  <BR/>
+  <SPAN>${LANG.__2FA__.HEADER}</SPAN>
+  <BR/>
+  <DIV CLASS="TABLE">
+   <SPAN>${LANG.__2FA__.SPAN}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.__2FA__.PLACEHOLDER_USERNAME}"
+    ID="__${PID}__CODE_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__CODE_AREA(event)"
+   ></TEXTAREA>
+  </DIV>
+ </DIV>
+ <DIV CLASS="__TWO_FA__PART">
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__OK_SIGNAL(event)"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__OK_SIGNAL(event)"
+  >${LANG.BUTTON.OK}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__CANCEL_SIGNAL(event)"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__CANCEL_SIGNAL(event)"
+  >${LANG.BUTTON.CANCEL}</A>
+ </DIV>
+</TWO_FA__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+const __${PID}__PARENT_PID = ${PARENT_PID};
+var __${PID}__CODE_INPUT;
+var __${PID}__USERNAME;
+
+__${PID}__USERNAME = "${USERNAME}";
+__${PID}__CODE_INPUT = document.getElementById("__${PID}__CODE_INPUT");
+
+async function
+	__${PID}__MAIN()
+{
+	const RESPONSE =
+		await AJAX_SEND(
+			"/ajax/usermanagement/create_2fa_code/",
+			{
+				USERNAME: __${PID}__USERNAME
+			}
+	);
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			return ;
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].__2FA__.ERROR.CODE_CREATE_FAIL.MESSAGE,
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].__2FA__.ERROR.CODE_CREATE_FAIL.TITLE
+				},
+				"${PID}"
+			);
+		}
+		break ;
+		default:
+			LOG(
+				__LANG__[LANG].__2FA__.ERROR.UNKNOWN.MESSAGE +
+				RESPONSE.THIS.error_level + ") - " +
+					RESPONSE.THIS.error_message || "Unknown error",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].__2FA__.ERROR.UNKNOWN.TITLE,
+					CLOSE_PARENT: true
+				},
+				"${PID}"
+			);
+		break ;
+	}
+}
+__${PID}__MAIN();
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+const __${PID}__PARENT_PID = "${PARENT_PID}";
+
+if (OS.PROCESS[__${PID}__PARENT_PID])
+{
+	OS.PROCESS[
+		__${PID}__PARENT_PID
+	].THIS.querySelectorAll("TEXTAREA, A").forEach(
+		ELEMENT =>
+		{
+			ELEMENT.classList.remove("UNSELECT");
+		}
+	);
+	document.getElementById(
+			"__${PARENT_PID}__REGISTER_BUTTON"
+		).classList.remove("DISABLED");
+	SET_TABS(OS.PROCESS[__${PID}__PARENT_PID].THIS);
+	OS.PROCESS[__${PID}__PARENT_PID].WAITING_PID = "";
+}
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+function
+	__${PID}__CODE_AREA(EVENT)
+{
+	if (EVENT.key)
+	{
+		if (EVENT.key === "Enter")
+		{
+			EVENT.preventDefault();
+			__${PID}__OK_SIGNAL();
+			return ;
+		}
+
+		if (
+			!(
+				EVENT.key === "0" ||
+				EVENT.key === "1" ||
+				EVENT.key === "2" ||
+				EVENT.key === "3" ||
+				EVENT.key === "4" ||
+				EVENT.key === "5" ||
+				EVENT.key === "6" ||
+				EVENT.key === "7" ||
+				EVENT.key === "8" ||
+				EVENT.key === "9"
+			) ||
+			__${PID}__CODE_INPUT.value.length > 5
+		)
+		{
+			if (
+				EVENT.key !== "Backspace" &&
+				EVENT.key !== "ArrowLeft" &&
+				EVENT.key !== "ArrowRight" &&
+				EVENT.key !== "ArrowUp" &&
+				EVENT.key !== "ArrowDown"
+			)
+				EVENT.preventDefault();
+		}
+	}
+}
+
+async function
+	__${PID}__OK_SIGNAL(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	// TODO: CHECK IF INPUTD DECENT
+	if (__${PID}__CODE_INPUT.value.length !== 6)
+	{
+		LOG(
+			__LANG__[LANG].__2FA__.ERROR.NOT_ENOUGH_CHARACTER.MESSAGE,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].__2FA__.ERROR.NOT_ENOUGH_CHARACTER.TITLE
+			},
+			"${PID}"
+		);
+		return ;
+	}
+
+	const RESPONSE_VERIFY =
+		await AJAX_SEND(
+			"/ajax/usermanagement/verify_2fa_code/",
+			{
+				CODE: __${PID}__CODE_INPUT.value,
+				USERNAME: __${PID}__USERNAME
+			}
+	);
+
+	if (RESPONSE_VERIFY.THIS.error_level === 0)
+	{
+		CLOSE_WINDOW("${PARENT_PID}");
+		CLOSE_WINDOW("${PID}");
+		START_DESKTOP();
+		return ;
+	}
+	else
+	{
+		LOG(
+			__LANG__[LANG].__2FA__.ERROR.WRONG_CODE.MESSAGE,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].__2FA__.ERROR.WRONG_CODE.TITLE
+			},
+			"${PID}"
+		);
+	}
+}
+
+function
+	__${PID}__CANCEL_SIGNAL(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	CLOSE_WINDOW("${PID}");
+}
+</SCRIPT>

@@ -1,0 +1,83 @@
+volumes:
+  postgresqp:
+    name: postgresqp
+
+networks:
+  connection:
+    name: connection
+    driver: bridge
+
+services:
+  # POSTGRES
+  database:
+    container_name: database
+    build:
+      context: ./database
+      args:
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+        - POSTGRES_DB
+    volumes:
+      - postgresqp:/var/lib/postgresql/data
+    networks:
+      - connection
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      args:
+        - DOMAIN_NAME
+        - CERTS_KEY
+        - CERTS_CRT
+    volumes:
+      - ./frontend/PUBLIC:/var/www/html
+    ports:
+      - "4343:443"
+      - "8080:80"
+    expose:
+      - 4343
+      - 8080
+    networks:
+      - connection
+    depends_on:
+      - backend
+      - database
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      args:
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+        - POSTGRES_DB
+        - SALT
+        - SECRET_KEY
+        - INTRA_OAUTH_URL
+        - INTRA_UID
+        - INTRA_REDIRECT_URL
+        - INTRA_TOKEN_URL
+        - INTRA_SECRET
+        - INTRA_USER_URL
+        - EMAIL_HOST
+        - EMAIL_PORT
+        - EMAIL_HOST_USER
+        - EMAIL_HOST_PASSWORD
+    ports:
+      - "8000:8000"
+      - "8001:587"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+    networks:
+      - connection
+    volumes:
+      - ./backend/Backend/apiTest:/TEST

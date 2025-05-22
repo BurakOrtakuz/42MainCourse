@@ -1,0 +1,525 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   WINDOW.css                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdeniz <Discord:@teomandeniz>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/01 18:00:03 by hdeniz            #+#    #+#             */
+/*   Updated: 2025/01/19 ??:??:?? by hdeniz           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+.OS_WINDOW
+{
+	         Z-INDEX: 1;
+	         PADDING: 1PX;
+	         DISPLAY: BLOCK;
+	        OVERFLOW: HIDDEN;
+	        POSITION: ABSOLUTE;
+	      BOX-SIZING: BORDER-BOX;
+	      BOX-SHADOW:
+		      VAR(--COLOR_8) -1PX -1PX 0 0 INSET,
+		      VAR(--COLOR_F) 1PX 1PX 0 0 INSET;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_7);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_7);
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_0);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_0);
+	  POINTER-EVENTS: ALL;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+.OS_WINDOW_BORDER,
+.OS_WINDOW_INNER
+{
+	           WIDTH: 100%;
+	          BORDER: 1PX SOLID VAR(--COLOR_7);
+	          HEIGHT: 22PX;
+	         Z-INDEX: 1;
+	         DISPLAY: BLOCK;
+	        POSITION: RELATIVE;
+	      BOX-SIZING: BORDER-BOX;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+
+.OS_WINDOW_INNER SPAN
+{
+	WHITE-SPACE: PRE-WRAP;
+}
+
+.OS_WINDOW_TITLEBAR
+{
+	           COLOR: VAR(--COLOR_F);
+	          HEIGHT: 18PX;
+	         Z-INDEX: 1;
+	         PADDING: 4PX 4PX 0 4PX;
+	         DISPLAY: BLOCK;
+	        POSITION: RELATIVE;
+	BACKGROUND-COLOR: VAR(--COLOR_8);
+}
+
+.OS_WINDOW_TITLEBAR.FOCUS
+{
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+.OS_WINDOW_TITLEBAR SPAN
+{
+	              FONT-SIZE: 12PX;
+	            FONT-FAMILY: "MS_SANS_SERIF_BOLD";
+	           MARGIN-RIGHT: 4PX;
+	         POINTER-EVENTS: NONE;
+	        -MS-USER-SELECT: NONE; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: NONE; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: NONE; /* STANDARD SYNTAX */
+}
+
+.OS_WINDOW_TITLEBAR,
+.OS_WINDOW_TITLEBAR *
+{
+	CURSOR: DEFAULT;
+}
+
+.OS_WINDOW_TITLEBAR::SELECTION,
+.OS_WINDOW_TITLEBAR *::SELECTION
+{
+	          CURSOR: DEFAULT;
+	BACKGROUND-COLOR: TRANSPARENT;
+}
+
+.OS_WINDOW_TITLE
+{
+	        FLOAT: LEFT;
+	     OVERFLOW: HIDDEN;
+	   WORD-BREAK: BREAK-WORD;
+	  WHITE-SPACE: NOWRAP;
+	TEXT-OVERFLOW: ELLIPSIS;
+}
+
+.OS_WINDOW_TITLEBAR .OS_WINDOW_ICON
+{
+	                  FLOAT: LEFT;
+	           MARGIN-RIGHT: 4PX;
+	         POINTER-EVENTS: NONE;
+	        -MS-USER-SELECT: NONE; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: NONE; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: NONE; /* STANDARD SYNTAX */
+}
+
+.OS_WINDOW_CLOSE_BUTTON
+{
+	MARGIN-LEFT: 2PX;
+}
+
+.OS_WINDOW_MAXIMIZE_BUTTON,
+.OS_WINDOW_MINIMIZE_BUTTON
+{
+	MARGIN-LEFT: 1PX;
+}
+
+.OS_WINDOW_CLOSE_BUTTON,
+.OS_WINDOW_MINIMIZE_BUTTON,
+.OS_WINDOW_MAXIMIZE_BUTTON
+{
+	      WIDTH: 13PX;
+	      FLOAT: RIGHT;
+	     HEIGHT: 11PX;
+	    Z-INDEX: 9995;
+	   POSITION: RELATIVE;
+	TEXT-INDENT: 0;
+	LINE-HEIGHT: 10.5PX;
+	FONT-FAMILY: "MARLETT" !IMPORTANT;
+}
+
+.OS_WINDOW_CLOSE_BUTTON,
+.OS_WINDOW_MINIMIZE_BUTTON,
+.OS_WINDOW_MAXIMIZE_BUTTON
+{
+	          MARGIN: 0 1PX 1PX 0;
+	      BOX-SHADOW: VAR(--COLOR_8) -1PX -1PX 0 0 INSET;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_F);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_F);
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_0);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_0);
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+A.OS_WINDOW_CLOSE_BUTTON,
+A.OS_WINDOW_MINIMIZE_BUTTON,
+A.OS_WINDOW_MAXIMIZE_BUTTON
+{
+	COLOR: VAR(--COLOR_0);
+}
+
+SPAN.OS_WINDOW_CLOSE_BUTTON,
+SPAN.OS_WINDOW_MINIMIZE_BUTTON,
+SPAN.OS_WINDOW_MAXIMIZE_BUTTON
+{
+	      COLOR: VAR(--COLOR_8);
+	TEXT-SHADOW: 1PX 1PX VAR(--COLOR_F);
+}
+
+.OS_WINDOW_CLOSE_BUTTON:ACTIVE,
+.OS_WINDOW_MINIMIZE_BUTTON:ACTIVE,
+.OS_WINDOW_MAXIMIZE_BUTTON:ACTIVE
+{
+	      OUTLINE: 0 !IMPORTANT;
+	   BORDER-TOP: 1PX SOLID VAR(--COLOR_0);
+	   BOX-SHADOW: VAR(--COLOR_8) 1PX 1PX 0 0 INSET;
+	  TEXT-INDENT: 1PX;
+	  LINE-HEIGHT: 12PX;
+	  BORDER-LEFT: 1PX SOLID VAR(--COLOR_0);
+	 BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+	BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+}
+
+A.OS_WINDOW_CLOSE_BUTTON:FOCUS,
+A.OS_WINDOW_MINIMIZE_BUTTON:FOCUS,
+A.OS_WINDOW_MAXIMIZE_BUTTON:FOCUS
+{
+	OUTLINE: VAR(--COLOR_F) SOLID 1PX;
+}
+
+.OS_WINDOW_INNER
+{
+	                 HEIGHT: CALC(100% - 22PX);
+	         POINTER-EVENTS: NONE;
+	        -MS-USER-SELECT: NONE; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: NONE; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: NONE; /* STANDARD SYNTAX */
+}
+
+.OS_WINDOW_INNER SPAN,
+.OS_WINDOW_INNER IMG,
+.OS_WINDOW_TITLEBAR SPAN
+{
+	         POINTER-EVENTS: NONE;
+	        -MS-USER-SELECT: NONE; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: NONE; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: NONE; /* STANDARD SYNTAX */
+}
+
+.OS_WINDOW_RESIZER_OBJECT
+{
+	   WIDTH: 6PX;
+	  HEIGHT: 6PX;
+	 Z-INDEX: 9998;
+	 OPACITY: 0;
+	 DISPLAY: BLOCK;
+	POSITION: ABSOLUTE;
+}
+
+#WINDOW-TOP-LEFT,
+#WINDOW-TOP-RIGHT,
+#WINDOW-BOTTOM-LEFT,
+#WINDOW-BOTTOM-RIGHT
+{
+	Z-INDEX: 9999;
+}
+
+#WINDOW-TOP-LEFT
+{
+	   TOP: 0;
+	  LEFT: 0;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NWSE-RESIZE.png") 10 10, NWSE-RESIZE !IMPORTANT;
+}
+
+#WINDOW-TOP-RIGHT
+{
+	   TOP: 0;
+	 RIGHT: 0;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NESW-RESIZE.png") 10 10, NESW-RESIZE !IMPORTANT;
+}
+
+#WINDOW-BOTTOM-LEFT
+{
+	  LEFT: 0;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NESW-RESIZE.png") 10 10, NESW-RESIZE !IMPORTANT;
+	BOTTOM: 0;
+}
+
+#WINDOW-BOTTOM-RIGHT
+{
+	 RIGHT: 0;
+	CURSOR: SE-RESIZE;
+	BOTTOM: 0;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NWSE-RESIZE.png") 10 10, NWSE-RESIZE !IMPORTANT;
+}
+
+#WINDOW-TOP
+{
+	   TOP: 0;
+	  LEFT: 0;
+	 WIDTH: 100%;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NS-RESIZE.png") 10 10, NS-RESIZE !IMPORTANT;
+}
+
+#WINDOW-BOTTOM
+{
+	  LEFT: 0;
+	 WIDTH: 100%;
+	BOTTOM: 0;
+	CURSOR:
+		URL("/IMAGES/CURSORS/NS-RESIZE.png") 10 10, NS-RESIZE !IMPORTANT;
+}
+
+#WINDOW-LEFT
+{
+	   TOP: 0;
+	  LEFT: 0;
+	HEIGHT: 100%;
+	CURSOR:
+		URL("/IMAGES/CURSORS/COL-RESIZE.png") 10 10, COL-RESIZE !IMPORTANT;
+}
+
+#WINDOW-RIGHT
+{
+	   TOP: 0;
+	 RIGHT: 0;
+	HEIGHT: 100%;
+	CURSOR:
+		URL("/IMAGES/CURSORS/COL-RESIZE.png") 10 10, COL-RESIZE !IMPORTANT;
+}
+
+A.WINBUTTON,
+TEXTAREA
+{
+	         POINTER-EVENTS: ALL;
+	        -MS-USER-SELECT: ALL; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: ALL; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: ALL; /* STANDARD SYNTAX */
+}
+
+A.WINBUTTON
+{
+	           WIDTH: MAX-CONTENT;
+	           COLOR: VAR(--COLOR_0);
+	          HEIGHT: 20PX;
+	          CURSOR: DEFAULT;
+	         PADDING: 0 8PX;
+	         OUTLINE: NONE;
+	         DISPLAY: FLEX;
+	       MIN-WIDTH: 56PX;
+	       FONT-SIZE: 12PX;
+	      BOX-SHADOW: VAR(--COLOR_8) -1PX -1PX 0 0 INSET;
+	      BORDER-TOP: 1PX OUTSET VAR(--COLOR_F);
+	     BORDER-LEFT: 1PX OUTSET VAR(--COLOR_F);
+	     ALIGN-ITEMS: CENTER;
+	    BORDER-RIGHT: 1PX OUTSET VAR(--COLOR_0);
+	   BORDER-BOTTOM: 1PX OUTSET VAR(--COLOR_0);
+	   BORDER-RADIUS: 0;
+	 TEXT-DECORATION: NONE;
+	 JUSTIFY-CONTENT: CENTER;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+A.WINBUTTON:ACTIVE,
+A.WINBUTTON.ACTIVE
+{
+	       MARGIN: 0 1PX -2PX 1PX;
+	      PADDING: 1PX 6PX 1PX 8PX;
+	   BOX-SHADOW: VAR(--COLOR_8) 1PX 1PX 0 0 INSET;
+	   BORDER-TOP: 1PX INSET VAR(--COLOR_0);
+	  BORDER-LEFT: 1PX INSET VAR(--COLOR_0);
+	 BORDER-RIGHT: 1PX INSET VAR(--COLOR_F);
+	BORDER-BOTTOM: 1PX INSET VAR(--COLOR_F);
+}
+
+A.WINBUTTON:FOCUS
+{
+	OUTLINE: VAR(--COLOR_0) SOLID 2PX;
+}
+
+A.WINBUTTON:ACTIVE:FOCUS,
+A.WINBUTTON.ACTIVE:FOCUS
+{
+	   OUTLINE: 0;
+	BOX-SHADOW: VAR(--COLOR_8) 1PX 1PX 0 0 INSET;
+}
+
+A.WINBUTTON.DISABLED
+{
+	COLOR: VAR(--COLOR_8);
+}
+
+TEXTAREA
+{
+	           COLOR: VAR(--COLOR_0);
+	          RESIZE: NONE;
+	          MARGIN: 0 1PX 1PX 0;
+	          HEIGHT: 14PX;
+	          CURSOR: TEXT;
+	          CURSOR:
+		          URL("/IMAGES/CURSORS/TEXT.png") 4 10, TEXT !IMPORTANT;
+	         OUTLINE: 0 NONE;
+	         PADDING: 3PX 2PX;
+	        OVERFLOW: HIDDEN;
+	       TEXT-WRAP: NOWRAP;
+	       FONT-SIZE: 12PX;
+	      BOX-SHADOW:
+		      VAR(--COLOR_7) -1PX -1PX 0 0 INSET,
+		      VAR(--COLOR_0) 1PX 1PX 0 0 INSET;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_8);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_8);
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-RADIUS: 0;
+	 TEXT-DECORATION: NONE;
+	BACKGROUND-COLOR: VAR(--COLOR_F);
+}
+
+TEXTAREA::SELECTION
+{
+	           COLOR: VAR(--COLOR_F);
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+TEXTAREA::PLACEHOLDER
+{
+	     COLOR: VAR(--COLOR_7);
+	FONT-STYLE: ITALIC;
+}
+
+.UNSELECT
+{
+	         POINTER-EVENTS: NONE !IMPORTANT;
+	        -MS-USER-SELECT: NONE !IMPORTANT; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: NONE !IMPORTANT; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: NONE !IMPORTANT; /* STANDARD SYNTAX */
+}
+
+SEPERATOR
+{
+	       MARGIN: 0 3PX 0 3PX;
+	   BORDER-TOP: 1PX SOLID VAR(--COLOR_8);
+	BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+}
+
+SEPERATOR_TOP
+{
+	      MARGIN: 3PX 0 3PX 0;
+	 BORDER-LEFT: 1PX SOLID VAR(--COLOR_8);
+	BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+}
+
+SEPERATOR_BOX_TOP
+{
+	        WIDTH: 1PX;
+	       MARGIN: 5PX 2PX;
+	       HEIGHT: -WEBKIT-FILL-AVAILABLE;
+	      DISPLAY: BLOCK;
+	   BORDER-TOP: 1PX SOLID VAR(--COLOR_F);
+	  BORDER-LEFT: 1PX SOLID VAR(--COLOR_F);
+	 BORDER-RIGHT: 1PX SOLID VAR(--COLOR_8);
+	BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_8);
+}
+
+SEPERATOR_BOX_TOP
+{
+	        WIDTH: 1PX;
+	       MARGIN: 5PX 2PX;
+	       HEIGHT: -WEBKIT-FILL-AVAILABLE;
+	      DISPLAY: BLOCK;
+	   BORDER-TOP: 1PX SOLID VAR(--COLOR_F);
+	  BORDER-LEFT: 1PX SOLID VAR(--COLOR_F);
+	 BORDER-RIGHT: 1PX SOLID VAR(--COLOR_8);
+	BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_8);
+}
+
+LABEL
+{
+	       DISPLAY: INLINE-FLEX;
+	   ALIGN-ITEMS: CENTER;
+    POINTER-EVENTS: ALL;
+}
+
+INPUT[TYPE=CHECKBOX],
+INPUT[TYPE=RADIO]
+{
+	                BORDER: NONE;
+	                MARGIN: 0;
+	               OPACITY: 0;
+	            BACKGROUND: 0;
+	              POSITION: FIXED;
+	       -MOZ-APPEARANCE: NONE;
+	    -WEBKIT-APPEARANCE: NONE;
+	/*-WEBKIT-*/APPEARANCE: NONE;
+}
+
+/* **************************** [v] CHECKBOX [v] **************************** */
+INPUT[TYPE=CHECKBOX] + LABEL
+{
+	   POSITION: RELATIVE;
+	MARGIN-LEFT: 19PX;
+}
+
+INPUT[TYPE=CHECKBOX] + LABEL:BEFORE
+{
+	        LEFT: -19PX;
+	       WIDTH: 13PX;
+	      HEIGHT: 13PX;
+	     DISPLAY: INLINE-BLOCK;
+	     CONTENT: "";
+	    POSITION: ABSOLUTE;
+	  BOX-SHADOW:
+		  INSET -1PX -1PX VAR(--COLOR_F),
+		  INSET 1PX 1PX VAR(--COLOR_8),
+		  INSET -2PX -2PX VAR(--COLOR_7),
+		  INSET 2PX 2PX VAR(--COLOR_0);
+	  BACKGROUND: VAR(--COLOR_F);
+	MARGIN-RIGHT: 6PX;
+}
+
+INPUT[TYPE=CHECKBOX]:CHECKED + LABEL:AFTER
+{
+	      LEFT: -16PX;
+	     WIDTH: 7PX;
+	    HEIGHT: 7PX;
+	   CONTENT: "";
+	   DISPLAY: BLOCK;
+	  POSITION: ABSOLUTE;
+	BACKGROUND:
+		URL("data:image/svg+xml;charset=utf-8,%3Csvg width='7' height='7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7 0H6v1H5v1H4v1H3v1H2V3H1V2H0v3h1v1h1v1h1V6h1V5h1V4h1V3h1V0z' fill='%23000'/%3E%3C/svg%3E");
+}
+/* **************************** [^] CHECKBOX [^] **************************** */
+
+/* ***************************** [v] RADIO [v] ****************************** */
+INPUT[TYPE=RADIO] + LABEL
+{
+	   POSITION: RELATIVE;
+	MARGIN-LEFT: 18PX;
+}
+
+INPUT[TYPE=RADIO] + LABEL:BEFORE
+{
+	         TOP: 0;
+	        LEFT: -18PX;
+	       WIDTH: 12PX;
+	      HEIGHT: 12PX;
+	     DISPLAY: INLINE-BLOCK;
+	     CONTENT: "";
+	    POSITION: ABSOLUTE;
+	  BACKGROUND:
+		  URL("data:image/svg+xml;charset=utf-8,%3Csvg width='12' height='12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 0H4v1H2v1H1v2H0v4h1v2h1V8H1V4h1V2h2V1h4v1h2V1H8V0z' fill='gray'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 1H4v1H2v2H1v4h1v1h1V8H2V4h1V3h1V2h4v1h2V2H8V1z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 3h1v1H9V3zm1 5V4h1v4h-1zm-2 2V9h1V8h1v2H8zm-4 0v1h4v-1H4zm0 0V9H2v1h2z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 2h-1v2h1v4h-1v2H8v1H4v-1H2v1h2v1h4v-1h2v-1h1V8h1V4h-1V2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 2h4v1h1v1h1v4H9v1H8v1H4V9H3V8H2V4h1V3h1V2z' fill='%23fff'/%3E%3C/svg%3E");
+	MARGIN-RIGHT: 6PX;
+}
+
+INPUT[TYPE=RADIO]:CHECKED + LABEL:AFTER
+{
+	       TOP: 4PX;
+	      LEFT: -14PX;
+	     WIDTH: 4PX;
+	    HEIGHT: 4PX;
+	   CONTENT: "";
+	   DISPLAY: BLOCK;
+	  POSITION: ABSOLUTE;
+	BACKGROUND:
+		URL("data:image/svg+xml;charset=utf-8,%3Csvg width='4' height='4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 0H1v1H0v2h1v1h2V3h1V1H3V0z' fill='%23000'/%3E%3C/svg%3E");
+}
+/* ***************************** [^] RADIO [^] ****************************** */

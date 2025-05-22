@@ -1,0 +1,10 @@
+{
+	"WIDTH": 230,
+	"HEIGHT": 270,
+	"BUTTON_CLOSE": true,
+	"BUTTON_SIZE": true,
+	"BUTTON_MINIMIZE": true,
+	"RESIZE": true,
+	"ICON": true,
+	"TITLE": ""
+}

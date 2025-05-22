@@ -1,0 +1,13 @@
+django==4.2.5
+channels
+psycopg2==2.9.7
+djangorestframework==3.15.0
+channels-redis
+redis
+daphne
+django-cors-headers
+djangorestframework-simplejwt
+PyJWT
+requests
+pyotp
+secure-smtplib

@@ -1,0 +1,114 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2024/12/05 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2024/12/08 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+POPUP__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL
+{
+	         WIDTH: 100%;
+	        HEIGHT: 100%;
+	       DISPLAY: FLEX;
+	FLEX-DIRECTION: COLUMN;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL .TABLE_HORIZONTAL
+{
+	  WIDTH: 100%;
+	 HEIGHT: CALC(100% - 40PX);
+	DISPLAY: FLEX;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL .TABLE_HORIZONTAL IMG
+{
+	  WIDTH: 32PX;
+	 HEIGHT: 32PX;
+	PADDING: 18PX;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL .TABLE_HORIZONTAL SPAN
+{
+	  WIDTH: 100%;
+	PADDING: 18PX 18PX 18PX 0;
+	DISPLAY: BLOCK;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL .CENTERED_BUTTON
+{
+	    HEIGHT: 32PX;
+	   DISPLAY: ${BUTTON_DISPLAY};
+	MARGIN-TOP: 8PX;
+}
+
+POPUP__CONTAINER .TABLE_VERTICAL .CENTERED_BUTTON A
+{
+	MARGIN: AUTO;
+}
+</STYLE>
+<POPUP__CONTAINER>
+ <DIV CLASS="TABLE_VERTICAL">
+  <DIV CLASS="TABLE_HORIZONTAL">
+   <IMG SRC="${PWD}${TYPE}.png" ALT="POPUP_ICON"/>
+   <SPAN>${MESSAGE}</SPAN>
+  </DIV>
+  <DIV CLASS="CENTERED_BUTTON" ID="__${PID}__BUTTON">
+   <A
+    ROLE="BUTTON"
+    CLASS="WINBUTTON"
+    ID="__${PID}__OK_BUTTON"
+    ONCLICK="JAVASCRIPT:__${PID}__OK_EVENT(event)"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__OK_EVENT(event)"
+   >${LANG.BUTTON.OK}</A>
+  </DIV>
+ </DIV>
+</POPUP__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+var __${PID}__OK_BUTTON;
+var __${PID}__OK_BUTTON_CONTAINER;
+
+__${PID}__OK_BUTTON = document.getElementById("__${PID}__OK_BUTTON");
+__${PID}__OK_BUTTON_CONTAINER = document.getElementById("__${PID}__BUTTON");
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+const PARENT_PID = "${PARENT_PID}";
+
+if (OS.PROCESS[PARENT_PID])
+{
+	OS.PROCESS[PARENT_PID].THIS.querySelectorAll("TEXTAREA, A").forEach(
+		ELEMENT =>
+		{
+			ELEMENT.classList.remove("UNSELECT");
+		}
+	);
+	SET_TABS(OS.PROCESS[PARENT_PID].THIS);
+	OS.PROCESS[PARENT_PID].WAITING_PID = "";
+}
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+function
+	__${PID}__OK_EVENT(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	CLOSE_WINDOW("${PID}");
+}
+</SCRIPT>

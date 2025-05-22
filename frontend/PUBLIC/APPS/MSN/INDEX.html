@@ -1,0 +1,58 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2025/01/18 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2025/01/18 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+MSN__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+#__${PID}__GLOBAL_BUTTON
+{
+	MARGIN: 16PX AUTO;
+}
+</STYLE>
+<MSN__CONTAINER>
+  <A
+   ROLE="BUTTON"
+   ID="__${PID}__GLOBAL_BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__OPEN_GLOBAL_CHAT(event);"
+  >${LANG.MSN.GLOBAL_CHAT_BUTTON}</A>
+  <SEPERATOR></SEPERATOR>
+</MSN__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+async function
+	__${PID}__OPEN_GLOBAL_CHAT(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	RUN_APP(
+		"MESSAGE_BOX",
+		{
+			FROM_PID: "${PID}",
+			TITLE: "global"
+		},
+		{
+			CHAT_ID: "global",
+			CHAT_PLACE: __LANG__[LANG].MSN.MESSAGE_PLACEHOLDER_AT + "global"
+		}
+	);
+}
+</SCRIPT>

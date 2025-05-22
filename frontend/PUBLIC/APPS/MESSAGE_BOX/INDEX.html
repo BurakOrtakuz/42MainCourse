@@ -1,0 +1,214 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2025/01/18 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2025/01/18 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+MESSAGE_BOX__CONTAINER
+{
+	        WIDTH: 100%;
+	       HEIGHT: 100%;
+	      DISPLAY: FLEX;
+	    FLEX-FLOW: COLUMN;
+}
+
+MESSAGE_BOX__CONTAINER .MESSAGE_CONTAINER
+{
+		           WIDTH: CALC(100% - 6PX);
+	           COLOR: VAR(--COLOR_0);
+	          RESIZE: NONE;
+	          MARGIN: 0 1PX 4PX 0;
+	          HEIGHT: 100%;
+	          CURSOR: TEXT;
+	         OUTLINE: 0 NONE;
+	         PADDING: 3PX 2PX;
+	        OVERFLOW: AUTO;
+	       TEXT-WRAP: NOWRAP;
+	       FONT-SIZE: 12PX;
+	      BOX-SHADOW:
+		      VAR(--COLOR_7) -1PX -1PX 0 0 INSET,
+		      VAR(--COLOR_0) 1PX 1PX 0 0 INSET;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_8);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_8);
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-RADIUS: 0;
+	  POINTER-EVENTS: ALL;
+	 TEXT-DECORATION: NONE;
+	BACKGROUND-COLOR: VAR(--COLOR_F);
+}
+
+MESSAGE_BOX__CONTAINER .TEXT_CONTAINER
+{
+	     WIDTH: -WEBKIT-FILL-AVAILABLE;
+	   DISPLAY: FLEX;
+	  POSITION: RELATIVE;
+	 FLEX-FLOW: ROW;
+	MARGIN-TOP: 3PX;
+}
+
+MESSAGE_BOX__CONTAINER .TEXT_CONTAINER TEXTAREA
+{
+	WIDTH: 100%;
+}
+
+MESSAGE_BOX__CONTAINER .MESSAGE_CONTAINER .MESSAGE
+{
+
+}
+
+MESSAGE_BOX__CONTAINER .MESSAGE_CONTAINER .MESSAGE .MSN_USERNAME
+{
+	FONT-FAMILY: "MS_SANS_SERIF_BOLD";
+}
+
+MESSAGE_BOX__CONTAINER .MESSAGE_CONTAINER .MESSAGE .MSN_MESSAGE
+{
+
+}
+</STYLE>
+<MESSAGE_BOX__CONTAINER ID="__${CHAT_ID}__">
+ <DIV CLASS="MESSAGE_CONTAINER" ID="__${PID}__MESSAGE_CONTAINER">
+  <!-- MESSAGES COMING HERE -->
+ </DIV>
+ <SEPERATOR></SEPERATOR>
+ <DIV CLASS="TEXT_CONTAINER" ID="__${PID}__TEXT_CONTAINER">
+  <TEXTAREA
+   PLACEHOLDER="${CHAT_PLACE}"
+   ID="__${PID}__MESSAGE_TEXTAREA"
+   ONKEYDOWN="JAVASCRIPT:__${PID}__MESSAGE_INPUT(this, event);"
+  ></TEXTAREA>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__SEND(event);"
+  >${LANG.MSN.SEND_BUTTON}</A>
+  </DIV>
+</MESSAGE_BOX__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+var __${PID}__MESSAGE_CONTAINER;
+var __${PID}__${CHAT_ID};
+var __${PID}__MESSAGE_TEXTAREA;
+var __${PID}__CHAT_SOCKET;
+
+__${PID}__MESSAGE_CONTAINER =
+	document.getElementById("__${PID}__MESSAGE_CONTAINER");
+__${PID}__${CHAT_ID} =
+	document.getElementById("__${CHAT_ID}__");
+__${PID}__MESSAGE_TEXTAREA =
+	document.getElementById("__${PID}__MESSAGE_TEXTAREA");
+__${PID}__CHAT_SOCKET =
+	new WebSocket('wss://' + window.location.host + '/ws/chat/');
+
+function
+	__${PID}__GET_MESSAGES()
+{
+	/*
+	const RESPONSE =
+		await AJAX_SEND(
+			"/ajax/usermanagement/register/",
+			{
+				USERNAME: __${PID}__NAME_INPUT.value,
+				EMAIL: __${PID}__NAME_INPUT.value,
+				PASSWORD: SHA256(__${PID}__PASSWORD_VALUE.join(''))
+			}
+		);
+	*/
+}
+
+__${PID}__CHAT_SOCKET.onmessage =
+	function(EVENT)
+{
+	const DATA = JSON.parse(EVENT.data);
+
+	/*if (DATA && DATA.error_level)
+	{
+		LOG(
+			__LANG__[LANG].MSN.ERROR.WEBSOCKET.MESSAGE +
+			" (" + DATA.error_level +
+			(DATA.error_message === "" ? ")" : ")\n") + DATA.error_message,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].MSN.ERROR.WEBSOCKET.TITLE
+			}
+		);
+		return ;
+	}*/
+
+	if (DATA.type === "chat_message")
+	{
+		const MESSAGE_WINDOW =
+			document.getElementById("__" +  DATA.room_name + "__");
+
+		if (!MESSAGE_WINDOW)
+			return ;
+
+		let MESSAGE_CONTAINER =
+			MESSAGE_WINDOW.querySelectorAll(".MESSAGE_CONTAINER");
+
+		if (MESSAGE_CONTAINER)
+			MESSAGE_CONTAINER = MESSAGE_CONTAINER[0];
+
+		MESSAGE_CONTAINER.innerHTML +=
+			"<DIV CLASS='MESSAGE'>" +
+			 "<SPAN CLASS='MSN_USERNAME'>" + DATA.username + ": </SPAN>" +
+			 "<SPAN CLASS='MSN_MESSAGE'>" + DATA.message + "</SPAN>" +
+			"</DIV>";
+		MESSAGE_CONTAINER.scrollTop = MESSAGE_CONTAINER.scrollHeight;
+	}
+};
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+if (__${PID}__CHAT_SOCKET !== undefined)
+	__${PID}__CHAT_SOCKET.close();
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+function
+	__${PID}__SEND(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	if (!__${PID}__MESSAGE_TEXTAREA.value.trim())
+		return ;
+
+	SEND_WEB_SOCKET(__${PID}__CHAT_SOCKET,
+		{
+			ACTION: "MESSAGE",
+			MESSAGE: __${PID}__MESSAGE_TEXTAREA.value,
+			CHANNEL: "${CHAT_ID}"
+		}
+	);
+	__${PID}__MESSAGE_TEXTAREA.value = "";
+}
+
+function
+	__${PID}__MESSAGE_INPUT(THIS, EVENT = {})
+{
+	if (EVENT && (EVENT.key !== 'Enter'))
+		return ;
+
+	if (!__${PID}__MESSAGE_TEXTAREA.value.trim())
+		return ;
+
+	EVENT.preventDefault(); // DISABLE PUTTING A NEW LINE
+	SEND_WEB_SOCKET(__${PID}__CHAT_SOCKET,
+		{
+			ACTION: "MESSAGE",
+			MESSAGE: __${PID}__MESSAGE_TEXTAREA.value,
+			CHANNEL: "${CHAT_ID}"
+		}
+	);
+	__${PID}__MESSAGE_TEXTAREA.value = "";
+}
+</SCRIPT>

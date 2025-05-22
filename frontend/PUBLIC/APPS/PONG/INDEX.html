@@ -1,0 +1,1634 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2025/01/18 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2025/01/18 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+PONG__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+PONG__CONTAINER #__${PID}__BUTTON_CONTAINER
+{
+	        GAP: 2EM;
+	     MARGIN: AUTO;
+	    DISPLAY: FLEX;
+	  FLEX-FLOW: COLUMN;
+	ALIGN-ITEMS: CENTER;
+}
+
+PONG__CONTAINER CANVAS
+{
+	 WIDTH: 100% !IMPORTANT;
+	HEIGHT: 100% !IMPORTANT;
+}
+
+PONG__CONTAINER .TOURNAMENT_CONTAINER
+{
+	            GAP: 20%;
+	          WIDTH: CALC(100% - 15PX);
+	         HEIGHT: CALC(100% - 23PX);
+	        PADDING: 8PX;
+	        DISPLAY: FLEX;
+	      FLEX-FLOW: COLUMN;
+	    ALIGN-ITEMS: CENTER;
+	  ALIGN-CONTENT: CENTER;
+	JUSTIFY-CONTENT: CENTER;
+}
+
+PONG__CONTAINER .TOURNAMENT_CONTAINER .FIRST .USER_NAME,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .SECOND .USER_NAME,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .CHAMPION .USER_NAME
+{
+		           WIDTH: CALC(100% - 6PX);
+	           COLOR: VAR(--COLOR_0);
+	          RESIZE: NONE;
+	          MARGIN: 0 1PX 1PX 0;
+	          HEIGHT: 100%;
+	          CURSOR: TEXT;
+	         OUTLINE: 0 NONE;
+	         PADDING: 3PX 2PX;
+	         DISPLAY: FLEX;
+	        OVERFLOW: HIDDEN;
+	       TEXT-WRAP: NOWRAP;
+	       FONT-SIZE: 12PX;
+	      BOX-SHADOW:
+		      VAR(--COLOR_7) -1PX -1PX 0 0 INSET,
+		      VAR(--COLOR_0) 1PX 1PX 0 0 INSET;
+	      TEXT-ALIGN: CENTER;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_8);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_8);
+	     ALIGN-ITEMS: CENTER;
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+	   BORDER-RADIUS: 0;
+	 TEXT-DECORATION: NONE;
+	 JUSTIFY-CONTENT: CENTER;
+	BACKGROUND-COLOR: VAR(--COLOR_F);
+}
+
+PONG__CONTAINER .TOURNAMENT_CONTAINER .FIRST .USER_NAME SPAN.SELF,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .SECOND .USER_NAME SPAN.SELF,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .CHAMPION .USER_NAME SPAN.SELF
+{
+	COLOR: VAR(--COLOR_9);
+}
+
+PONG__CONTAINER .TOURNAMENT_CONTAINER .FIRST,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .SECOND,
+PONG__CONTAINER .TOURNAMENT_CONTAINER .CHAMPION
+{
+	  WIDTH: 100%;
+	 HEIGHT: 100%;
+	DISPLAY: FLEX;
+}
+</STYLE>
+<PONG__CONTAINER ID="__${PID}__">
+ <DIV ID="__${PID}__BUTTON_CONTAINER">
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__VS_BOT(event)"
+  >${LANG.PONG.MAIN_MENU.VS_BOT}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__TWO_PLAYERS(event)"
+  >${LANG.PONG.MAIN_MENU.TWO_PLAYERS}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__VS_ONLINE(event)"
+  >${LANG.PONG.MAIN_MENU.VS_ONLINE}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__VS_TOURNAMENT(event)"
+  >${LANG.PONG.MAIN_MENU.VS_TOURNAMENT}</A>
+ </DIV>
+</PONG__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+var __${PID}__FOCUSED = true;
+var __${PID}__MAIN_MENU_CONTAINER_HTML;
+var __${PID}__TOURNAMENT_CONTAINER_HTML;
+var __${PID}__BUTTON_CONTAINER;
+var __${PID}__;
+var __${PID}__GAME_SOCKET;
+var __${PID}__ON_GAME = false;
+var THREE = window.THREE;
+var __${PID}__GAME;
+var __${PID}__GAME_SIZE;
+var __${PID}__LEFT_WON_MESSAGE;
+var __${PID}__RIGHT_WON_MESSAGE;
+var __${PID}__SOCKET_CLOSED_NORMALLY = false;
+//var __${PID}__ROOM_NAME = undefined; // FOR TOURNAMENT
+//var __${PID}__IN_TORUNAMENT = false; // FOR TOURNAMENT
+var __${PID}__WINNER_TOURNAMENT = undefined;
+var __${PID}__TOURNAMENT = false;
+var __${PID}__NEXT_TOURNAMENT = false;
+var __${PID}__LEFT_PLAYER = undefined;
+var __${PID}__RIGHT_PLAYER = undefined;
+var __${PID}__PLAYER_1 = "";
+var __${PID}__PLAYER_2 = "";
+var __${PID}__PLAYER_3 = "";
+var __${PID}__PLAYER_4 = "";
+var __${PID}__PLAYER_5 = "";
+var __${PID}__PLAYER_6 = "";
+var __${PID}__PLAYER_7 = "";
+var __${PID}__TOURNAMENT_MAIN_MENU_CONTAINER_HTML = "";
+
+function
+	__${PID}__HANDLE_KEY_UP(EVENT)
+{
+	__${PID}__GAME.keyState[EVENT.key.toLowerCase()] = false;
+}
+
+function
+	__${PID}__HANDLE_KEY_DOWN(EVENT)
+{
+	__${PID}__GAME.keyState[EVENT.key.toLowerCase()] = true;
+}
+
+__${PID}__BUTTON_CONTAINER =
+	document.getElementById("__${PID}__BUTTON_CONTAINER");
+__${PID}__ =
+	document.getElementById("__${PID}__");
+__${PID}__GAME_SIZE = {WIDTH: window.innerWidth, HEIGHT: window.innerHeight};
+__${PID}__GAME =
+{
+	keyState: {},
+	renderer: undefined,
+	scene: new THREE.Scene(),
+	ground: new THREE.Mesh(
+		new THREE.PlaneGeometry(20, 20),
+		new THREE.MeshBasicMaterial(
+			{
+				color: 0X800080,
+				side: THREE.DoubleSide
+			}
+		)
+	),
+	camera: new THREE.PerspectiveCamera(
+		45, // FOV
+		__${PID}__GAME_SIZE.WIDTH / __${PID}__GAME_SIZE.HEIGHT,
+		0.001, // NEAR
+		1000 // FAR
+	),
+	poleGeometry: new THREE.BoxGeometry(0.5, 5, 0.5),
+	poleMaterial: new THREE.MeshBasicMaterial({color: 0X808000}),
+	pole1: undefined,
+	pole2: undefined,
+	pole3: undefined,
+	pole4: undefined,
+	pole5: undefined,
+	pole6: undefined,
+	pole7: undefined,
+	pole8: undefined,
+	platform: new THREE.Mesh(
+		new THREE.BoxGeometry(19, 0.5, 9),
+		[
+			new THREE.MeshBasicMaterial({color: 0XFFFF00}),
+			// Left side (dark color)
+			new THREE.MeshBasicMaterial({color: 0XFFFF00}),
+			// Right side (dark color)
+			new THREE.MeshBasicMaterial({color: 0XFFFF00}),
+			// 	Top side (light color)
+			new THREE.MeshBasicMaterial({color: 0X808000}),
+			// Bottom side (light color)
+			new THREE.MeshBasicMaterial({color: 0X808000}),
+			// Front side (light color)
+			new THREE.MeshBasicMaterial({color: 0X808000})
+			// Back side (light color)
+		]
+	),
+	field: new THREE.Mesh(
+		new THREE.PlaneGeometry(18, 8),
+		new THREE.MeshBasicMaterial(
+			{
+				color: COLORS[GAME_STYLE["TABLE_COLOR"]],
+				side: THREE.DoubleSide
+			}
+		)
+	),
+	leftPaddle: new THREE.Mesh(
+		new THREE.BoxGeometry(0.5, 1, 2.5),
+		new THREE.MeshBasicMaterial(
+			{color: COLORS[GAME_STYLE["LEFT_PLAYER_COLOR"]]}
+		)
+	),
+	rightPaddle: new THREE.Mesh(
+		new THREE.BoxGeometry(0.5, 1, 2.5),
+		new THREE.MeshBasicMaterial(
+			{color: COLORS[GAME_STYLE["RIGHT_PLAYER_COLOR"]]}
+		)
+	),
+	ball: new THREE.Mesh(
+		new THREE.CylinderGeometry(0.5, 0.5, 0.2, 32),
+		new THREE.MeshBasicMaterial(
+			{color: COLORS[GAME_STYLE["BALL_COLOR"]]}
+		)
+	)
+};
+
+async function
+	__${PID}__EXIT_FROM_TOURNAMENT()
+{
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_MAIN_MENU_CONTAINER_HTML;
+	__${PID}__WINNER_TOURNAMENT = undefined;
+	__${PID}__TOURNAMENT = false;
+	__${PID}__PLAYER_1 = "";
+	__${PID}__PLAYER_2 = "";
+	__${PID}__PLAYER_3 = "";
+	__${PID}__PLAYER_4 = "";
+	__${PID}__PLAYER_5 = "";
+	__${PID}__PLAYER_6 = "";
+	__${PID}__PLAYER_7 = "";
+/*
+	if (__${PID}__ROOM_NAME !== undefined)
+	{
+		await AJAX_SEND(
+			"/ajax/pong/exit_from_tournament/",
+			{ROOM_NAME: __${PID}__ROOM_NAME}
+		);
+		__${PID}__ROOM_NAME = undefined;
+	}
+*/
+}
+
+function
+	__${PID}__GOTO_NEXT_TOURNAMENT()
+{
+	__${PID}__NEXT_TOURNAMENT = true;
+}
+
+__${PID}__GAME.ground.rotation.x = -Math.PI / 2;
+	// To make the plane horizontal
+__${PID}__GAME.scene.add(__${PID}__GAME.ground);
+__${PID}__GAME.pole1 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole1.position.set(-9, 2.5, -4); // x, y, z
+__${PID}__GAME.scene.add(__${PID}__GAME.pole1);
+__${PID}__GAME.pole2 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole2.position.set(-3, 2.5, -4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole2);
+__${PID}__GAME.pole3 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole3.position.set(3, 2.5, -4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole3);
+__${PID}__GAME.pole4 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole4.position.set(9, 2.5, -4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole4);
+__${PID}__GAME.pole5 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole5.position.set(-9, 2.5, 4); // x, y, z
+__${PID}__GAME.scene.add(__${PID}__GAME.pole5);
+__${PID}__GAME.pole6 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole6.position.set(-3, 2.5, 4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole6);
+__${PID}__GAME.pole7 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole7.position.set(3, 2.5, 4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole7);
+__${PID}__GAME.pole8 = new THREE.Mesh(
+	__${PID}__GAME.poleGeometry,
+	__${PID}__GAME.poleMaterial
+);
+__${PID}__GAME.pole8.position.set(9, 2.5, 4);
+__${PID}__GAME.scene.add(__${PID}__GAME.pole8);
+__${PID}__GAME.platform.position.set(0, 5, 0);
+	// Place the platform a little above the game field
+__${PID}__GAME.scene.add(__${PID}__GAME.platform);
+__${PID}__GAME.field.position.set(0, 5.26, 0);
+	// Place the field a little above the platform
+__${PID}__GAME.field.rotation.x = -Math.PI / 2;
+	// To make the plane horizontal
+__${PID}__GAME.scene.add(__${PID}__GAME.field);
+__${PID}__GAME.leftPaddle.position.set(-9, 5.75, 0);
+	// Sahanın sol ucuna yerleştir
+__${PID}__GAME.scene.add(__${PID}__GAME.leftPaddle);
+__${PID}__GAME.rightPaddle.position.set(9, 5.75, 0);
+	// Sahanın sağ ucuna yerleştir
+__${PID}__GAME.scene.add(__${PID}__GAME.rightPaddle);
+__${PID}__GAME.camera.position.set(0, 20, 15 /* CAMERA RADIUS */);
+	// Kamerayı başlangıç pozisyonuna yerleştir
+__${PID}__GAME.camera.lookAt(0, 5, 0); // Kamerayı oyun alanına bakacak şekilde ayarla
+__${PID}__GAME.ball.position.set(0, 5.37, 0); // Sahanın sol ucuna yerleştir
+__${PID}__GAME.scene.add(__${PID}__GAME.ball);
+document.addEventListener('keydown', __${PID}__HANDLE_KEY_DOWN);
+document.addEventListener('keyup', __${PID}__HANDLE_KEY_UP);
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+if (__${PID}__FOCUSED)
+{
+	document.removeEventListener('keydown', __${PID}__HANDLE_KEY_DOWN);
+	document.removeEventListener('keyup', __${PID}__HANDLE_KEY_UP);
+}
+
+if (__${PID}__TOURNAMENT)
+{
+	__${PID}__TOURNAMENT = false;
+	__${PID}__WINNER_TOURNAMENT = "";
+}
+
+if (__${PID}__GAME_SOCKET !== undefined)
+{
+	__${PID}__SOCKET_CLOSED_NORMALLY = true;
+	__${PID}__ON_GAME = false;
+	__${PID}__GAME_SOCKET.close();
+}
+
+__${PID}__EXIT_FROM_TOURNAMENT();
+window.onbeforeunload = function (){};
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="ONBLUR">
+if (__${PID}__FOCUSED)
+{
+	document.removeEventListener('keydown', __${PID}__HANDLE_KEY_DOWN);
+	document.removeEventListener('keyup', __${PID}__HANDLE_KEY_UP);
+	__${PID}__FOCUSED = false;
+}
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="ONFOCUS">
+document.addEventListener('keydown', __${PID}__HANDLE_KEY_DOWN);
+document.addEventListener('keyup', __${PID}__HANDLE_KEY_UP);
+__${PID}__FOCUSED = true;
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+async function
+	__${PID}__VS_BOT(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	__${PID}__MAIN_MENU_CONTAINER_HTML = __${PID}__.innerHTML;
+	__${PID}__.innerHTML = "";
+
+	const RESPONSE = await AJAX_SEND("/ajax/pong/one_player/", {});
+
+	if (RESPONSE.STATUS !== 0 || !RESPONSE.THIS)
+	{
+		LOG(
+			__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+				RESPONSE.STATUS + ")",
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+			},
+			"${PID}"
+		);
+		__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		return ;
+	}
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			__${PID}__LEFT_WON_MESSAGE = __LANG__[LANG].PONG.BOT_WON;
+			__${PID}__RIGHT_WON_MESSAGE = __LANG__[LANG].PONG.YOU_WON;
+			function
+				animate()
+			{
+				if (!__${PID}__ON_GAME)
+					return ;
+
+				requestAnimationFrame(animate);
+
+				if (
+					__${PID}__GAME.keyState['arrowup'] ||
+					__${PID}__GAME.keyState['w']
+				)
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': false
+						}
+					);
+				}
+
+				if (
+					__${PID}__GAME.keyState['arrowdown'] ||
+					__${PID}__GAME.keyState['s']
+				)
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': true
+						}
+					);
+				}
+
+				__${PID}__GAME.renderer.render(
+					__${PID}__GAME.scene,
+					__${PID}__GAME.camera
+				);
+			}
+
+			const ROOM_NAME = RESPONSE.THIS.room_name;
+
+			SET_TITLE(__LANG__[LANG].PONG.PLAYING_WITH + "BOT", "${PID}");
+			__${PID}__GAME_SOCKET =
+				new WebSocket('wss://' + window.location.host +
+					'/ws/pong/one_player/' + ROOM_NAME + "/");
+			__${PID}__.innerHTML =
+				"<CANVAS ID='__${PID}__GAME_SCREEN'></CANVAS>";
+			__${PID}__GAME_SOCKET.onclose = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			window.onbeforeunload = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			__${PID}__GAME_SOCKET.onmessage = __${PID}__HANDLE_WEBSOCKET_EVENT;
+			__${PID}__ON_GAME = true;
+			__${PID}__GAME.renderer =
+				new THREE.WebGLRenderer(
+					{
+						canvas:
+							document.getElementById("__${PID}__GAME_SCREEN")
+					}
+				);
+			__${PID}__GAME.renderer.setSize(
+				__${PID}__GAME_SIZE.WIDTH,
+				__${PID}__GAME_SIZE.HEIGHT
+			);
+			animate();
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.ROOM_CREATE.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.ROOM_CREATE.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		case (5):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR._5.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR._5.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		default:
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+	}
+}
+
+async function
+	__${PID}__TWO_PLAYERS(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	__${PID}__MAIN_MENU_CONTAINER_HTML = __${PID}__.innerHTML;
+	__${PID}__.innerHTML = "";
+
+	const RESPONSE = await AJAX_SEND("/ajax/pong/two_player/", {});
+
+	if (RESPONSE.STATUS !== 0 || !RESPONSE.THIS)
+	{
+		LOG(
+			__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+				RESPONSE.STATUS + ")",
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+			},
+			"${PID}"
+		);
+		__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		return ;
+	}
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			__${PID}__LEFT_WON_MESSAGE = __LANG__[LANG].PONG.LEFT_PLAYER_WON;
+			__${PID}__RIGHT_WON_MESSAGE = __LANG__[LANG].PONG.RIGHT_PLAYER_WON;
+
+			function
+				animate()
+			{
+				if (!__${PID}__ON_GAME)
+					return ;
+
+				requestAnimationFrame(animate);
+				// Paddle hareketi
+				if (__${PID}__GAME.keyState['arrowup'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['arrowdown'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': true
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['w'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['s'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': true
+						}
+					);
+				}
+
+				__${PID}__GAME.renderer.render(
+					__${PID}__GAME.scene,
+					__${PID}__GAME.camera
+				);
+			}
+
+			const ROOM_NAME = RESPONSE.THIS.room_name;
+
+			if (__${PID}__TOURNAMENT)
+			{
+				SET_TITLE(
+					__${PID}__LEFT_PLAYER +
+					" [0] - [0] " +
+					__${PID}__RIGHT_PLAYER,
+					"${PID}"
+				);
+			}
+			else
+				SET_TITLE(__LANG__[LANG].PONG.PLAYING_WITH_YOURSELF, "${PID}");
+
+			__${PID}__GAME_SOCKET =
+				new WebSocket('wss://' + window.location.host +
+					'/ws/pong/two_player/' + ROOM_NAME + "/");
+			__${PID}__.innerHTML =
+				"<CANVAS ID='__${PID}__GAME_SCREEN'></CANVAS>";
+			__${PID}__GAME_SOCKET.onclose = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			window.onbeforeunload = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			__${PID}__GAME_SOCKET.onmessage = __${PID}__HANDLE_WEBSOCKET_EVENT;
+			__${PID}__ON_GAME = true;
+			__${PID}__GAME.renderer =
+				new THREE.WebGLRenderer(
+					{
+						canvas:
+							document.getElementById("__${PID}__GAME_SCREEN")
+					}
+				);
+			__${PID}__GAME.renderer.setSize(
+				__${PID}__GAME_SIZE.WIDTH,
+				__${PID}__GAME_SIZE.HEIGHT
+			);
+			animate();
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.ROOM_CREATE.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.ROOM_CREATE.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		case (5):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR._5.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR._5.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		default:
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+	}
+}
+
+async function
+	__${PID}__VS_ONLINE(EVENT)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	__${PID}__MAIN_MENU_CONTAINER_HTML = __${PID}__.innerHTML;
+	__${PID}__.innerHTML = "";
+
+	const RESPONSE = await AJAX_SEND("/ajax/pong/multiple_player/", {});
+
+	if (RESPONSE.STATUS !== 0 || !RESPONSE.THIS)
+	{
+		LOG(
+			__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+				RESPONSE.STATUS + ")",
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+			},
+			"${PID}"
+		);
+		__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		return ;
+	}
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			function
+				animate()
+			{
+				if (!__${PID}__ON_GAME)
+					return ;
+
+				requestAnimationFrame(animate);
+
+				if (__${PID}__GAME.keyState['arrowup'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['arrowdown'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': true
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['w'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['s'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': true
+						}
+					);
+				}
+
+				__${PID}__GAME.renderer.render(
+					__${PID}__GAME.scene,
+					__${PID}__GAME.camera
+				);
+			}
+
+			const ROOM_NAME = RESPONSE.THIS.room_name;
+
+			SET_TITLE("[0] - [0]", "${PID}");
+
+			__${PID}__GAME_SOCKET =
+				new WebSocket('wss://' + window.location.host +
+					'/ws/pong/multiple_player/' + ROOM_NAME + "/");
+			__${PID}__.innerHTML =
+				"<CANVAS ID='__${PID}__GAME_SCREEN'></CANVAS>";
+			__${PID}__GAME_SOCKET.onclose = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			window.onbeforeunload = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			__${PID}__GAME_SOCKET.onmessage = __${PID}__HANDLE_WEBSOCKET_EVENT;
+			__${PID}__ON_GAME = true;
+			__${PID}__GAME.renderer =
+				new THREE.WebGLRenderer(
+					{
+						canvas:
+							document.getElementById("__${PID}__GAME_SCREEN")
+					}
+				);
+			__${PID}__GAME.renderer.setSize(
+				__${PID}__GAME_SIZE.WIDTH,
+				__${PID}__GAME_SIZE.HEIGHT
+			);
+			animate();
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.ROOM_CREATE.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.ROOM_CREATE.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		case (5):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR._5.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR._5.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		default:
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+	}
+}
+
+function
+	__${PID}__HANDLE_WEBSOCKET_CLOSED(__EVENT__)
+{
+	if (!__${PID}__SOCKET_CLOSED_NORMALLY)
+		LOG(__LANG__[LANG].PONG.SOCKET_CLOSED_BY_SERVER);
+
+
+	window.onbeforeunload = function (){};
+	__${PID}__SOCKET_CLOSED_NORMALLY = false;
+
+	//if (!__${PID}__IN_TORUNAMENT)
+	//{
+		__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		__${PID}__MAIN_MENU_CONTAINER_HTML = "";
+		SET_TITLE(__LANG__[LANG].PONG.TITLE, "${PID}");
+	//}
+	//else
+	//	__${PID}__VS_TOURNAMENT(undefined);
+}
+
+async function
+	__${PID}__HANDLE_WEBSOCKET_EVENT(__EVENT__)
+{
+	const DATA = JSON.parse(__EVENT__.data);
+
+	SRV_STATUS("GET");
+	if (
+		DATA.scoreLeft !== undefined &&
+		DATA.scoreRight !== undefined
+	)
+	{
+		if (__${PID}__TOURNAMENT)
+		{
+			SET_TITLE(
+				__${PID}__LEFT_PLAYER + "[" + DATA.scoreLeft +
+				"] - [" + DATA.scoreRight + "]" +
+				__${PID}__RIGHT_PLAYER,
+				"${PID}"
+			);
+		}
+		else
+		{
+			SET_TITLE(
+				"[" + DATA.scoreLeft + "] - [" + DATA.scoreRight + "]",
+				"${PID}"
+			);
+		}
+	}
+
+	if (
+		(DATA.isFinished !== undefined && DATA.isFinished === true) ||
+		(DATA.whoWin !== undefined && DATA.whoWin !== 0)
+	)
+	{
+		if (
+			DATA.isFinished &&
+			typeof(DATA.whoWin) === "string" &&
+			DATA.whoWin === " "
+		)
+			LOG(__LANG__[LANG].PONG.PLAYER_EXIT);
+
+		if (DATA.whoWin === -1 && __${PID}__TOURNAMENT)
+			__${PID}__WINNER_TOURNAMENT = __${PID}__LEFT_PLAYER;
+		else if (DATA.whoWin === 1 && __${PID}__TOURNAMENT)
+			__${PID}__WINNER_TOURNAMENT = __${PID}__RIGHT_PLAYER;
+		else if (DATA.whoWin === -1)
+			LOG(__${PID}__LEFT_WON_MESSAGE);
+		else if (DATA.whoWin === 1)
+			LOG(__${PID}__RIGHT_WON_MESSAGE);
+		else if (typeof(DATA.whoWin) === "string")
+		{
+			/*
+			if (__${PID}__IN_TORUNAMENT)
+			{
+				const TOURNAMENT_RESPONSE =
+					await AJAX_SEND("/ajax/pong/check_tournament/",
+						{
+							ROOM_NAME: __${PID}__ROOM_NAME,
+							WINNER: __${PID}__WINNER_TOURNAMENT,
+						}
+					);
+
+				__${PID}__WINNER_TOURNAMENT = undefined;
+
+				if (DATA.whoWin !== TOURNAMENT_RESPONSE.THIS.who_am_i)
+				{
+					__${PID}__ROOM_NAME = undefined;
+					__${PID}__IN_TORUNAMENT = false;
+				}
+
+				if (!TOURNAMENT_RESPONSE.THIS.check_available)
+					__${PID}__ROOM_NAME = undefined;
+			}
+			*/
+
+			__${PID}__WINNER_TOURNAMENT = DATA.whoWin;
+
+			LOG(
+				DATA.whoWin + __LANG__[LANG].PONG.MULTIPLAYER_WHO_WON
+			);
+		}
+
+		__${PID}__SOCKET_CLOSED_NORMALLY = true;
+		__${PID}__ON_GAME = false;
+		__${PID}__GAME_SOCKET.close();
+	}
+
+	if (DATA.rightPaddleZ !== undefined)
+	{
+		__${PID}__GAME.rightPaddle.position.z = DATA.rightPaddleZ;
+	}
+
+	if (DATA.leftPaddleZ !== undefined)
+	{
+		__${PID}__GAME.leftPaddle.position.z = DATA.leftPaddleZ;
+	}
+
+	if (DATA.ballX !== undefined)
+	{
+		__${PID}__GAME.ball.position.x = DATA.ballX;
+	}
+
+	if (DATA.ballZ !== undefined)
+	{
+		__${PID}__GAME.ball.position.z = DATA.ballZ;
+	}
+};
+
+async function
+	__${PID}__VS_TOURNAMENT(EVENT)
+{
+	var USER_HOLDER_1;
+	var USER_HOLDER_2;
+	var USER_HOLDER_3;
+	var USER_HOLDER_4;
+	var USER_HOLDER_5;
+	var USER_HOLDER_6;
+	var USER_HOLDER_7;
+
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	__${PID}__TOURNAMENT_MAIN_MENU_CONTAINER_HTML = __${PID}__.innerHTML;
+	__${PID}__TOURNAMENT_CONTAINER_HTML =
+		"<DIV CLASS='TOURNAMENT_CONTAINER'>" +
+	     "<A" +
+	     " ROLE='BUTTON'" +
+	     " CLASS='WINBUTTON'" +
+	     " ONCLICK='JAVASCRIPT:__${PID}__EXIT_FROM_TOURNAMENT(event)'" +
+	     ">${LANG.PONG.MAIN_MENU.EXIT}</A>" +
+	     "<A" +
+	     " ROLE='BUTTON'" +
+	     " CLASS='WINBUTTON'" +
+	     " ONCLICK='JAVASCRIPT:__${PID}__GOTO_NEXT_TOURNAMENT()'" +
+	     ">${LANG.PONG.MAIN_MENU.NEXT}</A>" +
+		 "<DIV CLASS='CHAMPION'>" +
+		  "<DIV CLASS='USER_NAME'><SPAN ID='__${PID}__USER_7'></SPAN></DIV>" +
+		 "</DIV>" +
+		 "<DIV CLASS='SECOND'>" +
+		  "<DIV CLASS='USER_NAME _1'><SPAN ID='__${PID}__USER_5'></SPAN></DIV>"+
+		  "<DIV CLASS='USER_NAME _2'><SPAN ID='__${PID}__USER_6'></SPAN></DIV>"+
+		 "</DIV>" +
+		 "<DIV CLASS='FIRST'>" +
+		  "<DIV CLASS='USER_NAME _1'><SPAN ID='__${PID}__USER_1'></SPAN></DIV>"+
+		  "<DIV CLASS='USER_NAME _2'><SPAN ID='__${PID}__USER_2'></SPAN></DIV>"+
+		  "<DIV CLASS='USER_NAME _3'><SPAN ID='__${PID}__USER_3'></SPAN></DIV>"+
+		  "<DIV CLASS='USER_NAME _4'><SPAN ID='__${PID}__USER_4'></SPAN></DIV>"+
+		 "</DIV>" +
+		"</DIV>";
+
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_CONTAINER_HTML;
+
+	USER_HOLDER_1 = document.getElementById("__${PID}__USER_1");
+	USER_HOLDER_2 = document.getElementById("__${PID}__USER_2");
+	USER_HOLDER_3 = document.getElementById("__${PID}__USER_3");
+	USER_HOLDER_4 = document.getElementById("__${PID}__USER_4");
+	USER_HOLDER_5 = document.getElementById("__${PID}__USER_5");
+	USER_HOLDER_6 = document.getElementById("__${PID}__USER_6");
+	USER_HOLDER_7 = document.getElementById("__${PID}__USER_7");
+
+	USER_HOLDER_1.textContent = __${PID}__PLAYER_1 = "Player 1";
+	USER_HOLDER_2.textContent = __${PID}__PLAYER_2 = "Player 2";
+	USER_HOLDER_3.textContent = __${PID}__PLAYER_3 = "Player 3";
+	USER_HOLDER_4.textContent = __${PID}__PLAYER_4 = "Player 4";
+	USER_HOLDER_5.textContent = __${PID}__PLAYER_5 = "";
+	USER_HOLDER_6.textContent = __${PID}__PLAYER_6 = "";
+	USER_HOLDER_7.textContent = __${PID}__PLAYER_7 = "";
+
+	__${PID}__TOURNAMENT = true;
+	__${PID}__LEFT_PLAYER = __${PID}__PLAYER_1;
+	__${PID}__RIGHT_PLAYER = __${PID}__PLAYER_2;
+
+
+	while (!__${PID}__NEXT_TOURNAMENT)
+		await SLEEP(10);
+
+	__${PID}__NEXT_TOURNAMENT = false;
+	__${PID}__TWO_PLAYERS();
+
+	while (__${PID}__WINNER_TOURNAMENT === undefined)
+		await SLEEP(10);
+
+	if (!__${PID}__TOURNAMENT)
+	{
+		__${PID}__WINNER_TOURNAMENT = undefined;
+		return ;
+	}
+
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_CONTAINER_HTML;
+	USER_HOLDER_1 = document.getElementById("__${PID}__USER_1");
+	USER_HOLDER_2 = document.getElementById("__${PID}__USER_2");
+	USER_HOLDER_3 = document.getElementById("__${PID}__USER_3");
+	USER_HOLDER_4 = document.getElementById("__${PID}__USER_4");
+	USER_HOLDER_5 = document.getElementById("__${PID}__USER_5");
+	USER_HOLDER_6 = document.getElementById("__${PID}__USER_6");
+	USER_HOLDER_7 = document.getElementById("__${PID}__USER_7");
+	USER_HOLDER_1.textContent = __${PID}__PLAYER_1;
+	USER_HOLDER_2.textContent = __${PID}__PLAYER_2;
+	USER_HOLDER_3.textContent = __${PID}__PLAYER_3;
+	USER_HOLDER_4.textContent = __${PID}__PLAYER_4;
+	USER_HOLDER_5.textContent = __${PID}__PLAYER_5 = __${PID}__WINNER_TOURNAMENT;
+	USER_HOLDER_6.textContent = __${PID}__PLAYER_6;
+	USER_HOLDER_7.textContent = __${PID}__PLAYER_7;
+	__${PID}__WINNER_TOURNAMENT = undefined;
+	__${PID}__LEFT_PLAYER = __${PID}__PLAYER_3;
+	__${PID}__RIGHT_PLAYER = __${PID}__PLAYER_4;
+
+	while (!__${PID}__NEXT_TOURNAMENT)
+		await SLEEP(10);
+
+	__${PID}__NEXT_TOURNAMENT = false;
+	__${PID}__TWO_PLAYERS();
+
+	while (__${PID}__WINNER_TOURNAMENT === undefined)
+		await SLEEP(10);
+
+	if (!__${PID}__TOURNAMENT)
+	{
+		__${PID}__WINNER_TOURNAMENT = undefined;
+		return ;
+	}
+
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_CONTAINER_HTML;
+	USER_HOLDER_1 = document.getElementById("__${PID}__USER_1");
+	USER_HOLDER_2 = document.getElementById("__${PID}__USER_2");
+	USER_HOLDER_3 = document.getElementById("__${PID}__USER_3");
+	USER_HOLDER_4 = document.getElementById("__${PID}__USER_4");
+	USER_HOLDER_5 = document.getElementById("__${PID}__USER_5");
+	USER_HOLDER_6 = document.getElementById("__${PID}__USER_6");
+	USER_HOLDER_7 = document.getElementById("__${PID}__USER_7");
+	USER_HOLDER_1.textContent = __${PID}__PLAYER_1;
+	USER_HOLDER_2.textContent = __${PID}__PLAYER_2;
+	USER_HOLDER_3.textContent = __${PID}__PLAYER_3;
+	USER_HOLDER_4.textContent = __${PID}__PLAYER_4;
+	USER_HOLDER_5.textContent = __${PID}__PLAYER_5;
+	USER_HOLDER_6.textContent = __${PID}__PLAYER_6 = __${PID}__WINNER_TOURNAMENT;
+	USER_HOLDER_7.textContent = __${PID}__PLAYER_7;
+	__${PID}__WINNER_TOURNAMENT = undefined;
+	__${PID}__LEFT_PLAYER = __${PID}__PLAYER_5;
+	__${PID}__RIGHT_PLAYER = __${PID}__PLAYER_6;
+
+	while (!__${PID}__NEXT_TOURNAMENT)
+		await SLEEP(10);
+
+	__${PID}__NEXT_TOURNAMENT = false;
+	__${PID}__TWO_PLAYERS();
+
+	while (__${PID}__WINNER_TOURNAMENT === undefined)
+		await SLEEP(10);
+
+	if (!__${PID}__TOURNAMENT)
+	{
+		__${PID}__WINNER_TOURNAMENT = undefined;
+		return ;
+	}
+
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_CONTAINER_HTML;
+	USER_HOLDER_1 = document.getElementById("__${PID}__USER_1");
+	USER_HOLDER_2 = document.getElementById("__${PID}__USER_2");
+	USER_HOLDER_3 = document.getElementById("__${PID}__USER_3");
+	USER_HOLDER_4 = document.getElementById("__${PID}__USER_4");
+	USER_HOLDER_5 = document.getElementById("__${PID}__USER_5");
+	USER_HOLDER_6 = document.getElementById("__${PID}__USER_6");
+	USER_HOLDER_7 = document.getElementById("__${PID}__USER_7");
+	USER_HOLDER_1.textContent = __${PID}__PLAYER_1;
+	USER_HOLDER_2.textContent = __${PID}__PLAYER_2;
+	USER_HOLDER_3.textContent = __${PID}__PLAYER_3;
+	USER_HOLDER_4.textContent = __${PID}__PLAYER_4;
+	USER_HOLDER_5.textContent = __${PID}__PLAYER_5;
+	USER_HOLDER_6.textContent = __${PID}__PLAYER_6;
+	USER_HOLDER_7.textContent = __${PID}__PLAYER_7 = __${PID}__WINNER_TOURNAMENT;
+	__${PID}__WINNER_TOURNAMENT = undefined;
+	__${PID}__TOURNAMENT = false;
+	LOG(__${PID}__PLAYER_7 + __LANG__[LANG].PONG.WON);
+
+	while (!__${PID}__NEXT_TOURNAMENT)
+		await SLEEP(10);
+
+	__${PID}__NEXT_TOURNAMENT = false;
+	__${PID}__.innerHTML = __${PID}__TOURNAMENT_MAIN_MENU_CONTAINER_HTML;
+	__${PID}__PLAYER_1 = "";
+	__${PID}__PLAYER_2 = "";
+	__${PID}__PLAYER_3 = "";
+	__${PID}__PLAYER_4 = "";
+	__${PID}__PLAYER_5 = "";
+	__${PID}__PLAYER_6 = "";
+	__${PID}__PLAYER_7 = "";
+	return ;
+
+/*
+	var RESPONSE = {THIS: {"error_level": 0}};
+
+	if (__${PID}__ROOM_NAME === undefined)
+		RESPONSE = await AJAX_SEND("/ajax/pong/add_player_tournament/");
+
+	if (RESPONSE.STATUS !== 0 || !RESPONSE.THIS)
+	{
+		LOG(
+			__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+				RESPONSE.STATUS + ")",
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+			},
+			"${PID}"
+		);
+		__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		return ;
+	}
+
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			async function
+				animate()
+			{
+				if (!__${PID}__ON_GAME)
+					return ;
+
+				requestAnimationFrame(animate);
+
+				if (__${PID}__GAME.keyState['arrowup'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['arrowdown'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'rightPaddleMovement': true
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['w'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': false
+						}
+					);
+				}
+
+				if (__${PID}__GAME.keyState['s'])
+				{
+					SEND_WEB_SOCKET(
+						__${PID}__GAME_SOCKET,
+						{
+							'leftPaddleMovement': true
+						}
+					);
+				}
+
+				__${PID}__GAME.renderer.render(
+					__${PID}__GAME.scene,
+					__${PID}__GAME.camera
+				);
+			}
+
+			if (__${PID}__ROOM_NAME === undefined)
+				__${PID}__ROOM_NAME = RESPONSE.THIS.room_name;
+
+			let IN_LOOP = true;
+			__${PID}__IN_TORUNAMENT = true;
+
+			while (IN_LOOP)
+			{
+				const LOOP_RESPONSE =
+					await AJAX_SEND("/ajax/pong/wait_update/",
+						{ROOM_NAME: __${PID}__ROOM_NAME});
+
+				if (__${PID}__ROOM_NAME === undefined)
+					return ;
+
+				if (LOOP_RESPONSE.THIS.error_level === 0)
+					IN_LOOP = false;
+
+				const DATA = LOOP_RESPONSE.THIS;
+
+				console.log("TOURNAMENT ID: " + __${PID}__ROOM_NAME + "\nROOM NAME: " + DATA.room_name + "\nPLAYERS: " + DATA.players);
+
+				if (DATA.players !== null && typeof(DATA.players) !== undefined)
+				{
+					USER_HOLDER_1.classList.remove("SELF");
+					USER_HOLDER_2.classList.remove("SELF");
+					USER_HOLDER_3.classList.remove("SELF");
+					USER_HOLDER_4.classList.remove("SELF");
+					USER_HOLDER_5.classList.remove("SELF");
+					USER_HOLDER_6.classList.remove("SELF");
+					USER_HOLDER_7.classList.remove("SELF");
+					USER_HOLDER_1.textContent = DATA.players[0];
+					USER_HOLDER_2.textContent = DATA.players[1];
+					USER_HOLDER_3.textContent = DATA.players[2];
+					USER_HOLDER_4.textContent = DATA.players[3];
+					USER_HOLDER_5.textContent = DATA.players[4];
+					USER_HOLDER_6.textContent = DATA.players[5];
+					USER_HOLDER_7.textContent = DATA.players[6];
+
+					if (DATA.current_player === DATA.players[0])
+						USER_HOLDER_1.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[1])
+						USER_HOLDER_2.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[2])
+						USER_HOLDER_3.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[3])
+						USER_HOLDER_4.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[4])
+						USER_HOLDER_5.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[5])
+						USER_HOLDER_6.classList.add("SELF");
+
+					if (DATA.current_player === DATA.players[6])
+						USER_HOLDER_7.classList.add("SELF");
+
+					await new Promise((RESOLVE) => setTimeout(RESOLVE, 100));
+				}
+			}
+
+			const GAME_RESPONSE =
+				await AJAX_SEND(
+					"/ajax/pong/start_tournament/",
+					{
+						ROOM_NAME: __${PID}__ROOM_NAME
+					}
+				);
+
+			if (GAME_RESPONSE.STATUS || !GAME_RESPONSE.THIS)
+			{
+				LOG(
+					__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+						GAME_RESPONSE.STATUS + ")",
+					"ERROR",
+					{
+						TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+					},
+					"${PID}"
+				);
+				__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+				return ;
+			}
+
+			if (GAME_RESPONSE.THIS.error_level !== 0)
+			{
+				LOG(
+					__LANG__[LANG].PONG.ERROR.JOIN.MESSAGE +
+						GAME_RESPONSE.THIS.error_level + ")",
+					"ERROR",
+					{
+						TITLE: __LANG__[LANG].PONG.ERROR.JOIN.TITLE,
+					},
+					"${PID}"
+				);
+				__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+				return ;
+			}
+
+			// IN GAME RIGHT NOW
+			const ROOM_NAME = GAME_RESPONSE.THIS.room_name;
+
+			console.log("ROOM: " + ROOM_NAME);
+
+			SET_TITLE(__LANG__[LANG].PONG.PLAYING_WITH_YOURSELF, "${PID}");
+
+			__${PID}__GAME_SOCKET =
+				new WebSocket('wss://' + window.location.host +
+					'/ws/pong/multiple_player/' + ROOM_NAME + "/");
+
+			__${PID}__TOURNAMENT_CONTAINER_HTML = __${PID}__.innerHTML;
+			__${PID}__.innerHTML =
+				"<CANVAS ID='__${PID}__GAME_SCREEN'></CANVAS>";
+			__${PID}__GAME_SOCKET.onclose = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			__${PID}__GAME_SOCKET.onmessage = __${PID}__HANDLE_WEBSOCKET_EVENT;
+			__${PID}__ON_GAME = true;
+			__${PID}__GAME.renderer =
+				new THREE.WebGLRenderer(
+					{
+						canvas:
+							document.getElementById("__${PID}__GAME_SCREEN")
+					}
+				);
+			__${PID}__GAME.renderer.setSize(
+				__${PID}__GAME_SIZE.WIDTH,
+				__${PID}__GAME_SIZE.HEIGHT
+			);
+			await animate();
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.ROOM_CREATE.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.ROOM_CREATE.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		case (5):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR._5.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR._5.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		default:
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+	}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	switch (RESPONSE.THIS.error_level)
+	{
+		case (0):
+		{
+			const ROOM_NAME = RESPONSE.THIS.room_name;
+
+			SET_TITLE(__LANG__[LANG].PONG.IN_TOURNAMENT, "${PID}");
+
+			try
+			{
+				__${PID}__GAME_SOCKET =
+					new WebSocket('wss://' + window.location.host +
+						'/ws/pong/tournament_player/' + ROOM_NAME + "/");
+			}
+			catch (ERROR)
+			{
+				if (DATA.error_level === 1)
+				{
+					LOG(
+						__LANG__[LANG].PONG.ERROR.ALREADY_IN.MESSAGE,
+						"ERROR",
+						{
+							TITLE:
+							__LANG__[LANG].PONG.ERROR.ALREADY_IN.TITLE,
+						},
+						"${PID}"
+					);
+					__${PID}__.innerHTML =
+						__${PID}__MAIN_MENU_CONTAINER_HTML;
+					__${PID}__GAME_SOCKET.close();
+				}
+			}
+
+			__${PID}__GAME_SOCKET.onclose = __${PID}__HANDLE_WEBSOCKET_CLOSED;
+			__${PID}__GAME_SOCKET.onmessage = (
+				function (__EVENT__)
+				{
+					const DATA = JSON.parse(__EVENT__.data);
+
+					if (DATA.error_level !== undefined)
+					{
+						if (DATA.error_level === 1)
+						{
+							LOG(
+								__LANG__[LANG].PONG.ERROR.ALREADY_IN.MESSAGE,
+								"ERROR",
+								{
+									TITLE:
+									__LANG__[LANG].PONG.ERROR.ALREADY_IN.TITLE,
+								},
+								"${PID}"
+							);
+							__${PID}__.innerHTML =
+								__${PID}__MAIN_MENU_CONTAINER_HTML;
+							__${PID}__GAME_SOCKET.close();
+						}
+					}
+
+					USER_HOLDER_1.textContent = DATA.player[1];
+					USER_HOLDER_2.textContent = DATA.player[2];
+					USER_HOLDER_3.textContent = DATA.player[3];
+					USER_HOLDER_4.textContent = DATA.player[4];
+					USER_HOLDER_5.textContent = DATA.player[5];
+					USER_HOLDER_6.textContent = DATA.player[6];
+					USER_HOLDER_7.textContent = DATA.player[7];
+
+					if (DATA.current_player === DATA.player[1])
+						USER_HOLDER_1.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[2])
+						USER_HOLDER_2.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[3])
+						USER_HOLDER_3.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[4])
+						USER_HOLDER_4.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[5])
+						USER_HOLDER_5.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[6])
+						USER_HOLDER_6.classList.add("SELF");
+
+					if (DATA.current_player === DATA.player[7])
+						USER_HOLDER_7.classList.add("SELF");
+
+					if (
+						DATA.scoreLeft !== undefined &&
+						DATA.scoreRight !== undefined
+					)
+					{
+						SET_TITLE(
+							DATA.scoreLeft + " - " + DATA.scoreRight,
+							"${PID}"
+						);
+					}
+
+					if (
+						DATA.isFinished !== undefined &&
+						DATA.isFinished === true
+					)
+					{
+						document.removeEventListener(
+							'keydown',
+							__${PID}__HANDLE_KEY_DOWN
+						);
+						document.removeEventListener(
+							'keyup',
+							__${PID}__HANDLE_KEY_UP
+						);
+						__${PID}__GAME_SOCKET.close();
+					}
+
+					if (DATA.rightPaddleZ !== undefined)
+					{
+						__${PID}__GAME.rightPaddle.position.z =
+							DATA.rightPaddleZ;
+					}
+
+					if (DATA.leftPaddleZ !== undefined)
+					{
+						__${PID}__GAME.leftPaddle.position.z = DATA.leftPaddleZ;
+					}
+
+					if (DATA.ballX !== undefined)
+					{
+						__${PID}__GAME.ball.position.x = DATA.ballX;
+					}
+
+					if (DATA.ballZ !== undefined)
+					{
+						__${PID}__GAME.ball.position.z = DATA.ballZ;
+					}
+				}
+			);
+		}
+		break ;
+		case (1):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.ROOM_CREATE.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.ROOM_CREATE.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		case (5):
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR._5.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR._5.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+		break ;
+		default:
+		{
+			LOG(
+				__LANG__[LANG].PONG.ERROR.CONNECTION.MESSAGE +
+					RESPONSE.THIS.error_level + ")",
+				"ERROR",
+				{
+					TITLE: __LANG__[LANG].PONG.ERROR.CONNECTION.TITLE,
+				},
+				"${PID}"
+			);
+			__${PID}__.innerHTML = __${PID}__MAIN_MENU_CONTAINER_HTML;
+		}
+	}
+	*/
+}
+</SCRIPT>

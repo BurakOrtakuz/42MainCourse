@@ -1,0 +1,11 @@
+{
+	"WIDTH": 230,
+	"HEIGHT": 270,
+	"X": "CENTER",
+	"Y": "CENTER",
+	"BUTTON_CLOSE": true,
+	"BUTTON_SIZE": true,
+	"BUTTON_MINIMIZE": true,
+	"ICON": true,
+	"TITLE": "MSN"
+}

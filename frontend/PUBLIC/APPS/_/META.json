@@ -1,0 +1,12 @@
+{
+	"WIDTH": 400, // Width Size
+	"HEIGHT": 400, // Height size
+	"X": "CENTER", // X
+	"Y": "CENTER", // Y
+	"BUTTON_CLOSE": true, // Close
+	"BUTTON_SIZE": true, // Maximize/Restore
+	"BUTTON_MINIMIZE": true, // Minimize
+	"RESIZE": true, // Resizable borders
+	"ICON": true, // Favicon
+	"TITLE": "Program Title"
+}

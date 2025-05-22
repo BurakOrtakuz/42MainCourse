@@ -1,0 +1,295 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   DESKTOP.css                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdeniz <Discord:@teomandeniz>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/18 16:39:?? by hdeniz            #+#    #+#             */
+/*   Updated: 2025/01/18 ??:??:?? by hdeniz           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#DESKTOP
+{
+	           WIDTH: 100%;
+	          HEIGHT: CALC(100% - (VAR(--START_BAR_SIZE) + VAR(--BORDER_SIZE)));
+	         Z-INDEX: 1;
+	BACKGROUND-COLOR: TRANSPARENT;
+}
+
+#DESKTOP.ACTIVE
+{
+	BACKGROUND-COLOR: VAR(--COLOR_3);
+}
+
+#DESKTOP.ERROR
+{
+	BACKGROUND-COLOR: VAR(--COLOR_4);
+}
+
+#DESKTOP #DESKTOP_BACK
+{
+	     TOP: 0;
+	    LEFT: 0;
+	   WIDTH: 100%;
+	  HEIGHT: 100%;
+	 Z-INDEX: 2;
+	 DISPLAY: BLOCK;
+	POSITION: ABSOLUTE;
+}
+
+#DESKTOP #APPS
+{
+	         WIDTH: 100%;
+	        HEIGHT: CALC(100% - 2EM);
+	       Z-INDEX: 3;
+	      POSITION: ABSOLUTE;
+	POINTER-EVENTS: NONE;
+}
+
+#DESKTOP #WINDOWS
+{
+	         WIDTH: 100%;
+	        HEIGHT: 100%;
+	       Z-INDEX: 4;
+	      POSITION: ABSOLUTE;
+	POINTER-EVENTS: NONE;
+}
+
+#DESKTOP #START_BAR
+{
+	           WIDTH: 100%;
+	          HEIGHT: 2EM;
+	          BOTTOM: 0;
+	         Z-INDEX: 99;
+	         DISPLAY: FLEX;
+	        POSITION: ABSOLUTE;
+	       FLEX-FLOW: ROW;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_7);
+	      BOX-SHADOW: VAR(--COLOR_F) 0 1PX 0 0 INSET;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+#DESKTOP #START_BAR .LEFT,
+#DESKTOP #START_BAR .MIDDLE,
+#DESKTOP #START_BAR .RIGHT
+{
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+#DESKTOP #START_BAR .LEFT
+{
+	FLOAT: LEFT;
+}
+
+#DESKTOP #START_BAR .MIDDLE
+{
+	WIDTH: 100%;
+}
+
+#DESKTOP #START_BAR .RIGHT
+{
+	FLOAT: RIGHT;
+}
+
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA
+{
+	        WIDTH: INITIAL;
+	       MARGIN: 3PX 2PX;
+	      PADDING: 1PX 3PX;
+	      DISPLAY: FLEX;
+	    FLEX-FLOW: ROW;
+	   BORDER-TOP: 1PX SOLID VAR(--COLOR_8);
+	  BORDER-LEFT: 1PX SOLID VAR(--COLOR_8);
+	 BORDER-RIGHT: 1PX SOLID VAR(--COLOR_F);
+	BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_F);
+}
+
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA .CLOCK
+{
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA .CLOCK SPAN
+{
+	  WIDTH: 1CH;
+	DISPLAY: BLOCK;
+}
+
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA .CLOCK SPAN#CLOCK_HOUR,
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA .CLOCK SPAN#CLOCK_MINUTE,
+#DESKTOP #START_BAR .RIGHT .INFORMATION_AREA .CLOCK SPAN#CLOCK_SECOND
+{
+	WIDTH: 2CH;
+}
+
+#DESKTOP #APPS .APP
+{
+	         WIDTH: 60PX;
+	        HEIGHT: CALC(80PX + 8PX);
+	       PADDING: 4PX 8PX;
+	POINTER-EVENTS: ALL;
+}
+
+#DESKTOP #APPS .APP IMG
+{
+	 MARGIN: 0 AUTO 8PX AUTO;
+	DISPLAY: BLOCK;
+}
+
+#DESKTOP #APPS .APP.FOCUS::AFTER
+{
+                TOP: -61PX;
+	           LEFT: -8PX;
+	          WIDTH: 76PX;
+	         HEIGHT: 40PX;
+	        DISPLAY: BLOCK;
+	        CONTENT: '';
+	       POSITION: RELATIVE;
+	     BACKGROUND:
+		     RADIAL-GRADIENT(CIRCLE, VAR(--COLOR_3) 0, TRANSPARENT 1PX);
+	 POINTER-EVENTS: NONE;
+	BACKGROUND-SIZE: 1.5PX 1.5PX;
+}
+
+#DESKTOP #APPS .APP SPAN
+{
+	  WIDTH: FIT-CONTENT;
+	  COLOR: VAR(--COLOR_F);
+	 MARGIN: 0 AUTO;
+	 HEIGHT: INITIAL;
+	PADDING: 1PX;
+	DISPLAY: BLOCK;
+}
+
+#DESKTOP #APPS .APP.FOCUS SPAN
+{
+	          BORDER: 1PX DOTTED VAR(--COLOR_E);
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+DIV.START
+{
+	MARGIN: 2PX;
+}
+
+DIV.START A#START
+{
+	         POINTER-EVENTS: ALL;
+	        -MS-USER-SELECT: ALL; /* IE 10 AND IE 11 */
+	    -WEBKIT-USER-SELECT: ALL; /* SAFARI */
+	/*-WEBKIT-*/USER-SELECT: ALL; /* STANDARD SYNTAX */
+}
+
+DIV.START A#START
+{
+	           WIDTH: MAX-CONTENT;
+	           COLOR: VAR(--COLOR_0);
+	          HEIGHT: 19PX;
+	          CURSOR: DEFAULT;
+	         OUTLINE: NONE;
+	         DISPLAY: FLEX;
+	       MIN-WIDTH: 56PX;
+	       FONT-SIZE: 12PX;
+	      BOX-SHADOW: VAR(--COLOR_8) -1PX -1PX 0 0 INSET;
+	      BORDER-TOP: 1PX OUTSET VAR(--COLOR_F);
+	     BORDER-LEFT: 1PX OUTSET VAR(--COLOR_F);
+	     ALIGN-ITEMS: CENTER;
+	    BORDER-RIGHT: 1PX OUTSET VAR(--COLOR_0);
+	   BORDER-BOTTOM: 1PX OUTSET VAR(--COLOR_0);
+	   BORDER-RADIUS: 0;
+	 TEXT-DECORATION: NONE;
+	 JUSTIFY-CONTENT: CENTER;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+DIV.START A#START:ACTIVE,
+DIV.START A#START.ACTIVE
+{
+	       MARGIN: 0 -1PX -2PX 1PX;
+	      PADDING: 1PX 0 0 0;
+	   BOX-SHADOW: VAR(--COLOR_8) 1PX 1PX 0 0 INSET;
+	   BORDER-TOP: 1PX INSET VAR(--COLOR_0);
+	  BORDER-LEFT: 1PX INSET VAR(--COLOR_0);
+	 BORDER-RIGHT: 1PX INSET VAR(--COLOR_F);
+	BORDER-BOTTOM: 1PX INSET VAR(--COLOR_F);
+}
+
+DIV.START A#START IMG
+{
+	MARGIN-RIGHT: 2PX;
+}
+
+#START_MENU
+{
+	            LEFT: 0;
+	           WIDTH: 150PX;
+	          HEIGHT: INITIAL;
+	          BOTTOM: 25PX;
+	         Z-INDEX: 999;
+	         PADDING: 1PX;
+	         DISPLAY: NONE;
+	        OVERFLOW: HIDDEN;
+	        POSITION: ABSOLUTE;
+	      BOX-SIZING: BORDER-BOX;
+	      BOX-SHADOW:
+		      VAR(--COLOR_8) -1PX -1PX 0 0 INSET,
+		      VAR(--COLOR_F) 1PX 1PX 0 0 INSET;
+	      BORDER-TOP: 1PX SOLID VAR(--COLOR_7);
+	     BORDER-LEFT: 1PX SOLID VAR(--COLOR_7);
+	    BORDER-RIGHT: 1PX SOLID VAR(--COLOR_0);
+	   BORDER-BOTTOM: 1PX SOLID VAR(--COLOR_0);
+	  POINTER-EVENTS: ALL;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+#START_MENU .LEFT_BANNER
+{
+	           WIDTH: 20PX;
+	          HEIGHT: AUTO;
+	      MARGIN-TOP: 1PX;
+	   MARGIN-BOTTOM: 1PX;
+	BACKGROUND-COLOR: VAR(--COLOR_8);
+}
+
+#START_MENU .LIST 
+{
+	        WIDTH: 100%;
+	       HEIGHT: 100%;
+	      DISPLAY: FLEX;
+	    FLEX-FLOW: COLUMN;
+	   MARGIN-TOP: 1PX;
+	 MARGIN-RIGHT: 1PX;
+	MARGIN-BOTTOM: 1PX;
+}
+
+#START_MENU .LIST SEPERATOR
+{
+	   MARGIN-TOP: 4PX;
+	MARGIN-BOTTOM: 4PX;
+}
+
+#START_MENU .LIST A
+{
+	      WIDTH: 100%;
+	    PADDING: 4PX;
+	    DISPLAY: FLEX;
+	ALIGN-ITEMS: CENTER;
+}
+
+#START_MENU .LIST A:HOVER
+{
+	           COLOR: VAR(--COLOR_F);
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+#SRV_STATUS
+{
+	       WIDTH: 16PX;
+	      HEIGHT: 16PX;
+	  MARGIN-TOP: -1.5PX;
+	MARGIN-RIGHT: 4PX;
+}

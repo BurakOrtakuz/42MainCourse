@@ -1,0 +1,8 @@
+{
+	"WIDTH": 450,
+	"HEIGHT": 120,
+	"X": "CENTER",
+	"Y": "CENTER",
+	"ICON": true,
+	"TITLE": "${LANG.__2FA__.TITLE}"
+}

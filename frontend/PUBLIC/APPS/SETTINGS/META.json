@@ -1,0 +1,9 @@
+{
+	"WIDTH": 600,
+	"HEIGHT": 600,
+	"X": "CENTER",
+	"Y": "CENTER",
+	"BUTTON_CLOSE": true,
+	"ICON": true,
+	"TITLE": "${LANG.SETTINGS.TITLE}"
+}

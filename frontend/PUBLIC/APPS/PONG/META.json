@@ -1,0 +1,12 @@
+{
+	"WIDTH": 400,
+	"HEIGHT": 400,
+	"X": "CENTER",
+	"Y": "CENTER",
+	"BUTTON_CLOSE": true,
+	"BUTTON_SIZE": true,
+	"BUTTON_MINIMIZE": true,
+	"RESIZE": true,
+	"ICON": true,
+	"TITLE": "${LANG.PONG.TITLE}"
+}

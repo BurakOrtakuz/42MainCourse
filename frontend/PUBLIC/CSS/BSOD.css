@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BSOD.css                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdeniz <Discord:@teomandeniz>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 11:18:?? by hdeniz            #+#    #+#             */
+/*   Updated: 2024/12/08 ??:??:?? by hdeniz           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+BODY.BSOD
+{
+	        OVERFLOW: HIDDEN;
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+BODY.BSOD DIV
+{
+	MARGIN: AUTO AUTO;
+}
+
+BODY.BSOD DIV *
+{
+	      COLOR: VAR(--COLOR_F);
+	  FONT-SIZE: 12PX;
+	FONT-FAMILY: "MS_SANS_SERIF_BOLD";
+}
+
+BODY.BSOD DIV H1
+{
+	           COLOR: VAR(--COLOR_1);
+	          MARGIN: 0 CALC(50% - 3CH);
+	      TEXT-ALIGN: CENTER;
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+BODY.BSOD DIV SPAN
+{
+	        MARGIN: 0;
+	        BORDER: 0;
+	       PADDING: 0PX 4PX;
+	       DISPLAY: INLINE-BLOCK;
+	     FONT-SIZE: 100%;
+	   WHITE-SPACE: PRE-WRAP;
+	VERTICAL-ALIGN: BASELINE;
+}
+
+BODY.BSOD DIV SPAN.CENTER
+{
+	    MARGIN: 0 AUTO;
+	   DISPLAY: BLOCK;
+	  POSITION: RELATIVE;
+	TEXT-ALIGN: CENTER;
+}
+
+BODY.BSOD DIV SPAN.CMD_BLINK
+{
+	COLOR: VAR(--COLOR_7);
+}
+
+.btn-bsod
+{
+	           COLOR: WHITE;
+	          BORDER: NONE;
+	         PADDING: 8PX 16PX;
+	       FONT-SIZE: 14PX;
+	BACKGROUND-COLOR: VAR(--COLOR_C);
+}
+
+.btn-bsod:HOVER
+{
+	BACKGROUND-COLOR: VAR(--COLOR_4);
+}
+

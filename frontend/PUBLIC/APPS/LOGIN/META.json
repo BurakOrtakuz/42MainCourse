@@ -1,0 +1,8 @@
+{
+	"X": "CENTER",
+	"Y": "CENTER",
+	"WIDTH": 484,
+	"HEIGHT": 168,
+	"ICON": true,
+	"TITLE": "${LANG.LOGIN.TITLE}"
+}

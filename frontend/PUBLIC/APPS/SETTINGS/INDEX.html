@@ -1,0 +1,886 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2025/01/18 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2025/01/18 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+PROGRAM__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+.COLOR_BOX
+{
+	BORDER: 1PX SOLID VAR(--COLOR_0);
+	MARGIN: -2PX;
+}
+
+.COLOR_BOX._0_
+{
+		   COLOR: VAR(--COLOR_0);
+	BACKGROUND-COLOR: VAR(--COLOR_0);
+}
+
+.COLOR_BOX._1_
+{
+		   COLOR: VAR(--COLOR_1);
+	BACKGROUND-COLOR: VAR(--COLOR_1);
+}
+
+.COLOR_BOX._2_
+{
+		   COLOR: VAR(--COLOR_2);
+	BACKGROUND-COLOR: VAR(--COLOR_2);
+}
+
+.COLOR_BOX._3_
+{
+		   COLOR: VAR(--COLOR_3);
+	BACKGROUND-COLOR: VAR(--COLOR_3);
+}
+
+.COLOR_BOX._4_
+{
+		   COLOR: VAR(--COLOR_4);
+	BACKGROUND-COLOR: VAR(--COLOR_4);
+}
+
+.COLOR_BOX._5_
+{
+		   COLOR: VAR(--COLOR_5);
+	BACKGROUND-COLOR: VAR(--COLOR_5);
+}
+
+.COLOR_BOX._6_
+{
+		   COLOR: VAR(--COLOR_6);
+	BACKGROUND-COLOR: VAR(--COLOR_6);
+}
+
+.COLOR_BOX._7_
+{
+		   COLOR: VAR(--COLOR_7);
+	BACKGROUND-COLOR: VAR(--COLOR_7);
+}
+
+.COLOR_BOX._8_
+{
+		   COLOR: VAR(--COLOR_8);
+	BACKGROUND-COLOR: VAR(--COLOR_8);
+}
+
+.COLOR_BOX._9_
+{
+		   COLOR: VAR(--COLOR_9);
+	BACKGROUND-COLOR: VAR(--COLOR_9);
+}
+
+.COLOR_BOX._A_
+{
+		   COLOR: VAR(--COLOR_A);
+	BACKGROUND-COLOR: VAR(--COLOR_A);
+}
+
+.COLOR_BOX._B_
+{
+		   COLOR: VAR(--COLOR_B);
+	BACKGROUND-COLOR: VAR(--COLOR_B);
+}
+
+.COLOR_BOX._C_
+{
+		   COLOR: VAR(--COLOR_C);
+	BACKGROUND-COLOR: VAR(--COLOR_C);
+}
+
+.COLOR_BOX._D_
+{
+		   COLOR: VAR(--COLOR_D);
+	BACKGROUND-COLOR: VAR(--COLOR_D);
+}
+
+.COLOR_BOX._E_
+{
+		   COLOR: VAR(--COLOR_E);
+	BACKGROUND-COLOR: VAR(--COLOR_E);
+}
+
+.COLOR_BOX._F_
+{
+		   COLOR: VAR(--COLOR_F);
+	BACKGROUND-COLOR: VAR(--COLOR_F);
+}
+
+.SETTINGS_CONTAINER
+{
+	MARGIN: 16PX AUTO
+}
+
+.COLORS_CONTAINER_X
+{
+	   MARGIN: AUTO 0;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+.COLORS_CONTAINER_Y
+{
+	   MARGIN: 0 AUTO;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+.COLORS_CONTAINER,
+.COLORS_CONTAINER_MAIN
+{
+			  GAP: 10PX;
+			WIDTH: 100%;
+		       HEIGHT: 100%;
+		      DISPLAY: GRID;
+		JUSTIFY-ITEMS: CENTER;
+	      JUSTIFY-CONTENT: CENTER;
+	GRID-TEMPLATE-COLUMNS: AUTO 1FR;
+}
+
+.COLORS_TABLE,
+.COLORS_TABLE
+{
+			  GAP: 10PX;
+			WIDTH: 100%;
+		       HEIGHT: 100%;
+		      DISPLAY: GRID;
+		JUSTIFY-ITEMS: CENTER;
+	      JUSTIFY-CONTENT: CENTER;
+	GRID-TEMPLATE-COLUMNS: AUTO 1FR;
+}
+
+.COLOR_TITLE
+{
+	   TEXT-ALIGN: CENTER;
+	MARGIN-BOTTOM: 4PX;
+}
+</STYLE>
+<PROGRAM__CONTAINER ID="__${PID}__">
+ <DIV CLASS="SETTINGS_CONTAINER">
+  <DIV>
+   <INPUT TYPE="CHECKBOX" ID="__${PID}__2FA_CHECKBOX"/>
+   <LABEL CHECKED=""
+    FOR="__${PID}__2FA_CHECKBOX" ONCLICK="JAVASCRIPT:__${PID}__SET_2FA()">
+    ${LANG.SETTINGS.CHECK__2FA}
+   </LABEL>
+  </DIV>
+ </DIV>
+ <DIV CLASS="COLORS_CONTAINER_X">
+  <DIV CLASS="COLORS_CONTAINER_Y">
+   <SPAN CLASS="COLOR_TITLE">${LANG.SETTINGS.LEFT_PLAYER_COLOR}</SPAN>
+   <DIV CLASS="COLORS_TABLE">
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_0_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_0_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="0"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _0_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_1_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_1_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="1"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _1_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_2_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_2_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="2"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _2_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_3_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_3_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="3"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _3_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_4_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_4_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="4"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _4_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_5_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_5_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="5"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _5_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_6_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_6_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="6"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _6_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_7_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_7_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="7"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _7_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_8_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_8_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="8"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _8_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_9_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_9_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="9"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _9_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_A_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_A_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="A"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _A_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_B_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_B_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="B"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _B_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_C_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_C_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="C"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _C_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_D_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_D_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="D"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _D_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_E_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_E_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="E"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _E_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_LEFT_PLAYER_COLOR_F_"/>
+     <LABEL FOR="__${PID}__RADIO_LEFT_PLAYER_COLOR_F_"
+      DATA-ENTITY="LEFT_PLAYER_COLOR"
+      DATA-COLOR="F"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _F_">***</SPAN>
+     </LABEL>
+    </DIV>
+   </DIV>
+  </DIV>
+  <SEPERATOR_TOP></SEPERATOR_TOP>
+  <DIV CLASS="COLORS_CONTAINER_Y">
+   <SPAN CLASS="COLOR_TITLE">${LANG.SETTINGS.RIGHT_PLAYER_COLOR}</SPAN>
+   <DIV CLASS="COLORS_TABLE">
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_0_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_0_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="0"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _0_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_1_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_1_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="1"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _1_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_2_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_2_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="2"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _2_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_3_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_3_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="3"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _3_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_4_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_4_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="4"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _4_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_5_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_5_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="5"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _5_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_6_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_6_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="6"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _6_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_7_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_7_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="7"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _7_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_8_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_8_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="8"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _8_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_9_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_9_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="9"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _9_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_A_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_A_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="A"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _A_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_B_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_B_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="B"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _B_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_C_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_C_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="C"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _C_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_D_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_D_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="D"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _D_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_E_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_E_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="E"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _E_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_RIGHT_PLAYER_COLOR_F_"/>
+     <LABEL FOR="__${PID}__RADIO_RIGHT_PLAYER_COLOR_F_"
+      DATA-ENTITY="RIGHT_PLAYER_COLOR"
+      DATA-COLOR="F"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _F_">***</SPAN>
+     </LABEL>
+    </DIV>
+   </DIV>
+  </DIV>
+ </DIV>
+ <SEPERATOR></SEPERATOR>
+ <DIV CLASS="COLORS_CONTAINER_X">
+  <DIV CLASS="COLORS_CONTAINER_Y">
+   <SPAN CLASS="COLOR_TITLE">${LANG.SETTINGS.BALL_COLOR}</SPAN>
+   <DIV CLASS="COLORS_TABLE">
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_0_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_0_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="0"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _0_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_1_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_1_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="1"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _1_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_2_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_2_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="2"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _2_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_3_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_3_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="3"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _3_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_4_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_4_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="4"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _4_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_5_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_5_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="5"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _5_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_6_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_6_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="6"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _6_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_7_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_7_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="7"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _7_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_8_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_8_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="8"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _8_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_9_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_9_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="9"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _9_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_A_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_A_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="A"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _A_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_B_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_B_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="B"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _B_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_C_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_C_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="C"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _C_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_D_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_D_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="D"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _D_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_E_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_E_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="E"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _E_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_BALL_COLOR_F_"/>
+     <LABEL FOR="__${PID}__RADIO_BALL_COLOR_F_"
+      DATA-ENTITY="BALL_COLOR"
+      DATA-COLOR="F"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _F_">***</SPAN>
+     </LABEL>
+    </DIV>
+   </DIV>
+  </DIV>
+  <SEPERATOR_TOP></SEPERATOR_TOP>
+  <DIV CLASS="COLORS_CONTAINER_Y">
+   <SPAN CLASS="COLOR_TITLE">${LANG.SETTINGS.TABLE_COLOR}</SPAN>
+   <DIV CLASS="COLORS_TABLE">
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_0_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_0_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="0"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _0_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_1_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_1_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="1"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _1_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_2_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_2_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="2"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _2_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_3_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_3_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="3"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _3_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_4_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_4_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="4"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _4_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_5_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_5_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="5"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _5_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_6_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_6_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="6"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _6_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_7_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_7_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="7"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _7_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_8_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_8_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="8"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _8_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_9_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_9_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="9"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _9_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_A_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_A_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="A"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _A_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_B_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_B_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="B"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _B_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_C_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_C_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="C"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _C_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_D_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_D_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="D"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _D_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_E_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_E_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="E"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _E_">***</SPAN>
+     </LABEL>
+    </DIV>
+    <DIV>
+     <INPUT TYPE="RADIO" ID="__${PID}__RADIO_TABLE_COLOR_F_"/>
+     <LABEL FOR="__${PID}__RADIO_TABLE_COLOR_F_"
+      DATA-ENTITY="TABLE_COLOR"
+      DATA-COLOR="F"
+      ONCLICK="JAVASCRIPT:__${PID}__RADIO(this)">
+      <SPAN CLASS="COLOR_BOX _F_">***</SPAN>
+     </LABEL>
+    </DIV>
+   </DIV>
+  </DIV>
+ </DIV>
+</PROGRAM__CONTAINER>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+var __${PID}__2FA_STATUS;
+
+async function
+	__${PID}__MAIN()
+{
+	__${PID}__2FA_STATUS =
+		await AJAX_SEND("/ajax/usermanagement/get_2fa/", {});
+
+	if (__${PID}__2FA_STATUS.STATUS === 0)
+		__${PID}__2FA_STATUS = __${PID}__2FA_STATUS.THIS.FA;
+	else
+	{
+		BSOD("Failed to get __${PID}__2FA_STATUS");
+		return ;
+	}
+
+	if (__${PID}__2FA_STATUS)
+		document.getElementById("__${PID}__2FA_CHECKBOX").checked = true;
+    else
+	document.getElementById("__${PID}__2FA_CHECKBOX").checked = false;
+
+	for (
+		const DATA_ENTITY of
+		[
+			"RIGHT_PLAYER_COLOR",
+			"LEFT_PLAYER_COLOR",
+			"BALL_COLOR",
+			"TABLE_COLOR"
+		]
+	)
+	{
+		for (const CHAR of "0123456789ABCDEF")
+		{
+			const ELEMENT =
+				document.getElementById(
+					"__${PID}__RADIO_" + DATA_ENTITY + "_" + CHAR + "_"
+				);
+
+			if (GAME_STYLE[DATA_ENTITY] === CHAR)
+				ELEMENT.checked = true;
+		}
+	}
+}
+
+__${PID}__MAIN();
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+async function
+	__${PID}__SET_2FA()
+{
+	if (__${PID}__2FA_STATUS)
+	{
+		document.getElementById("__${PID}__2FA_CHECKBOX").checked = true;
+		__${PID}__2FA_STATUS = false;
+	}
+	else
+	{
+		document.getElementById("__${PID}__2FA_CHECKBOX").checked = false;
+		__${PID}__2FA_STATUS = true;
+	}
+
+	const RESPONSE =
+		await AJAX_SEND("/ajax/usermanagement/two_factor_permit/",
+			{
+				STATE: __${PID}__2FA_STATUS
+			}
+		);
+
+	if (RESPONSE.STATUS !== 0)
+	{
+		BSOD("Failed to get __${PID}__2FA_STATUS");
+		return ;
+	}
+}
+
+function
+	__${PID}__RADIO(THIS)
+{
+	const DATA_ENTITY = THIS.getAttribute('DATA-ENTITY');
+	const DATA_COLOR = THIS.getAttribute('DATA-COLOR');
+
+	GAME_STYLE[DATA_ENTITY] = DATA_COLOR;
+
+	for (const CHAR of "0123456789ABCDEF")
+	{
+		const ELEMENT =
+			document.getElementById(
+				"__${PID}__RADIO_" + DATA_ENTITY + "_" + CHAR + "_"
+			);
+
+		ELEMENT.checked = false;
+	}
+
+	THIS.checked = true;
+}
+</SCRIPT>

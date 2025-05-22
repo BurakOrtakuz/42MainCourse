@@ -1,0 +1,366 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                                                                         -->
+<!--                                                      :::      ::::::::  -->
+<!--   INDEX.html                                       :+:      :+:    :+:  -->
+<!--                                                  +:+ +:+         +:+    -->
+<!--   By: hdeniz <Discord:@teomandeniz>            +#+  +:+       +#+       -->
+<!--                                              +#+#+#+#+#+   +#+          -->
+<!--   Created: 2024/12/05 ??:??:?? by hdeniz          #+#    #+#            -->
+<!--   Updated: 2024/12/08 ??:??:?? by hdeniz         ###   ########.fr      -->
+<!--                                                                         -->
+<!-- ----------------------------------------------------------------------- -->
+
+<STYLE>
+REGISTER__CONTAINER
+{
+	    WIDTH: 100%;
+	   HEIGHT: 100%;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: ROW;
+}
+
+.__REGISTER__PART
+{
+	    WIDTH: -WEBKIT-FILL-AVAILABLE;
+	   HEIGHT: -WEBKIT-FILL-AVAILABLE;
+	  DISPLAY: FLEX;
+	FLEX-FLOW: COLUMN;
+}
+
+.__REGISTER__PART:NTH-CHILD(1)
+{
+	      WIDTH: INITIAL;
+	    DISPLAY: FLEX;
+	    PADDING: 18PX;
+	ALGIN-ITEMS: CENTER;
+}
+
+.__REGISTER__PART:NTH-CHILD(1) IMG
+{
+	         WIDTH: 48PX;
+	        HEIGHT: 48PX;
+	POINTER-EVENTS: NONE;
+}
+
+.__REGISTER__PART:NTH-CHILD(2) SPAN
+{
+	DISPLAY: FLEX;
+}
+
+.__REGISTER__PART:NTH-CHILD(3)
+{
+	    GAP: 6PX;
+	  WIDTH: INITIAL;
+	PADDING: 18PX;
+}
+
+.TABLE
+{
+	                  GAP: 6PX;
+	                WIDTH: 100%;
+	              DISPLAY: GRID;
+	            FLEX-WRAP: WRAP;
+	GRID-TEMPLATE-COLUMNS: AUTO 1FR;
+}
+
+.TABLE SPAN
+{
+	        DISPLAY: FLEX; 
+	    ALIGN-ITEMS: CENTER;
+	 POINTER-EVENTS: NONE;
+	JUSTIFY-CONTENT: FLEX-START;
+}
+
+.TABLE TEXTAREA
+{
+	WIDTH: 100%;
+}
+</STYLE>
+
+<REGISTER__CONTAINER>
+ <DIV CLASS="__REGISTER__PART">
+  <IMG SRC="${PWD}USER_KEY.png" ALT="REGISTER INCON"/>
+ </DIV>
+ <DIV CLASS="__REGISTER__PART">
+  <BR/>
+  <SPAN>${LANG.REGISTER.HEADER}</SPAN>
+  <BR/>
+  <DIV CLASS="TABLE">
+   <SPAN>${LANG.REGISTER.SPAN_USERNAME}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.REGISTER.PLACEHOLDER_USERNAME}"
+    ID="__${PID}__NAME_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__NAME_EVENT(event)"
+   ></TEXTAREA>
+   <SPAN>${LANG.REGISTER.SPAN_EMAIL}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.REGISTER.PLACEHOLDER_EMAIL}"
+    ID="__${PID}__EMAIL_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__EMAIL_EVENT(event)"
+   ></TEXTAREA>
+   <SPAN>${LANG.REGISTER.SPAN_PASSWORD}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.REGISTER.PLACEHOLDER_PASSWORD}"
+    ID="__${PID}__PASSWORD_INPUT"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__PASSWORD_EVENT(event, this)"
+   ></TEXTAREA>
+   <SPAN>${LANG.REGISTER.SPAN_PASSWORD_AGAIN}</SPAN>
+   <TEXTAREA
+    PLACEHOLDER="${LANG.REGISTER.PLACEHOLDER_PASSWORD_AGAIN}"
+    ID="__${PID}__PASSWORD_INPUT_AGAIN"
+    ONKEYDOWN="JAVASCRIPT:__${PID}__PASSWORD_EVENT_AGAIN(event, this)"
+   ></TEXTAREA>
+  </DIV>
+ </DIV>
+ <DIV CLASS="__REGISTER__PART">
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__REGISTER_SIGNAL(event)"
+  >${LANG.REGISTER.REGISTER_BUTTON}</A>
+  <A
+   ROLE="BUTTON"
+   CLASS="WINBUTTON"
+   ONCLICK="JAVASCRIPT:__${PID}__CANCEL_BUTTON(event)"
+  >${LANG.BUTTON.CANCEL}</A>
+ </DIV>
+</REGISTER__CONTAINER>
+<!-- ---------------------------- [v] MAIN [v] ----------------------------- -->
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="CONSTRUCTOR">
+	let __${PID}__NAME_INPUT;
+	let __${PID}__PASSWORD_INPUT;
+	let __${PID}__EMAIL_INPUT;
+
+	__${PID}__NAME_INPUT =
+		document.getElementById("__${PID}__NAME_INPUT");
+	__${PID}__PASSWORD_INPUT =
+		document.getElementById("__${PID}__PASSWORD_INPUT");
+	__${PID}__EMAIL_INPUT =
+		document.getElementById("__${PID}__EMAIL_INPUT");
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="DESTRUCTOR">
+const __${PID}__PARENT_PID = ${PARENT_PID};
+
+if (OS.PROCESS[__${PID}__PARENT_PID])
+{
+	OS.PROCESS[
+		__${PID}__PARENT_PID
+	].THIS.querySelectorAll("TEXTAREA, A").forEach(
+		ELEMENT =>
+		{
+			ELEMENT.classList.remove("UNSELECT");
+		}
+	);
+	document.getElementById(
+			"__${PARENT_PID}__REGISTER_BUTTON"
+		).classList.remove("DISABLED");
+	SET_TABS(OS.PROCESS[__${PID}__PARENT_PID].THIS);
+	OS.PROCESS[__${PID}__PARENT_PID].WAITING_PID = "";
+}
+</SCRIPT>
+<SCRIPT TYPE="TEXT/JAVASCRIPT" ID="EVENTS">
+const __${PID}__PASSWORD_VALUE = [];
+const __${PID}__PASSWORD_VALUE_AGAIN = [];
+
+async function
+	__${PID}__REGISTER_SIGNAL(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	if (
+		__${PID}__NAME_INPUT.value.trim() === "" ||
+		__${PID}__EMAIL_INPUT.value.trim() === "" ||
+		__${PID}__PASSWORD_VALUE.join('').trim() === "" ||
+		__${PID}__PASSWORD_VALUE_AGAIN.join('').trim() === ""
+	)
+	{
+		LOG(
+			__LANG__[LANG].REGISTER.ERROR.INPUTS_NULL.MESSAGE,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].REGISTER.ERROR.INPUTS_NULL.TITLE
+			},
+			"${PID}"
+		);
+		return ;
+	}
+
+	if (
+		SHA256(__${PID}__PASSWORD_VALUE.join('')) !==
+		SHA256(__${PID}__PASSWORD_VALUE_AGAIN.join(''))
+	)
+	{
+		LOG(
+			__LANG__[LANG].REGISTER.ERROR.PASSWORD_NOT_SAME.MESSAGE,
+			"ERROR",
+			{
+				TITLE: __LANG__[LANG].REGISTER.ERROR.PASSWORD_NOT_SAME.TITLE
+			},
+			"${PID}"
+		);
+	}
+	else
+	{
+		const RESPONSE =
+			await AJAX_SEND(
+				"/ajax/usermanagement/register/",
+				{
+					USERNAME: __${PID}__NAME_INPUT.value,
+					EMAIL: __${PID}__EMAIL_INPUT.value,
+					PASSWORD: SHA256(__${PID}__PASSWORD_VALUE.join(''))
+				}
+			);
+
+		switch (RESPONSE.THIS.error_level)
+		{
+			case (0): // SUCCESS
+			{
+				LOG(
+					__LANG__[LANG].REGISTER.SUCCESS.MESSAGE,
+					"INFO",
+					{
+						TITLE: __LANG__[LANG].REGISTER.SUCCESS.TITLE
+					}
+				);
+				CLOSE_WINDOW("${PID}");
+			}
+			break ;
+			case (1): // USERNAME IS ALREADY EXIST
+			{
+				LOG(
+					__LANG__[LANG].REGISTER.ERROR._1.MESSAGE,
+					"WARNING",
+					{
+						TITLE: __LANG__[LANG].REGISTER.ERROR._1.TITLE
+					},
+					"${PID}"
+				);
+			}
+			break ;
+			case (2): // INPUT FORMAT ERROR
+			{
+				LOG(
+					__LANG__[LANG].REGISTER.ERROR._2.MESSAGE,
+					"ERROR",
+					{
+						TITLE: __LANG__[LANG].REGISTER.ERROR._2.TITLE
+					},
+					"${PID}"
+				);
+			}
+			break ;
+			default: // SOMETHING WENT WRONG
+			{
+				LOG(
+					__LANG__[LANG].REGISTER.ERROR._3.MESSAGE +
+						RESPONSE.THIS.error_message,
+					"ERROR",
+					{
+						TITLE: __LANG__[LANG].REGISTER.ERROR._3.TITLE
+					},
+					"${PID}"
+				);
+			}
+			break ;
+		}
+
+	}
+}
+
+function
+	__${PID}__CANCEL_BUTTON(EVENT = undefined)
+{
+	if (
+		EVENT &&
+		(EVENT.key !== ' ' && EVENT.key !== 'Enter' && EVENT.type !== "click")
+	)
+		return ;
+
+	CLOSE_WINDOW(${PID});
+}
+
+function
+	__${PID}__PASSWORD_EVENT(EVENT, TEXTAREA)
+{
+	if (EVENT.code === "Enter")
+	{
+		__${PID}__PASSWORD_INPUT_AGAIN.focus();
+		EVENT.preventDefault(); // DISABLE PUTTING A NEW LINE
+	}
+	else
+	{
+		if (EVENT.key.length === 1)
+			__${PID}__PASSWORD_VALUE.push(EVENT.key);
+		else if (EVENT.key === 'Backspace')
+			__${PID}__PASSWORD_VALUE.pop();
+
+		EVENT.preventDefault(); // DISABLE PUTTING A NEW LINE
+		TEXTAREA.value = '*'.repeat(__${PID}__PASSWORD_VALUE.length);
+	}
+}
+
+function
+	__${PID}__PASSWORD_EVENT_AGAIN(EVENT, TEXTAREA)
+{
+	if (EVENT.code === "Enter")
+	{
+		if (
+			SHA256(__${PID}__PASSWORD_VALUE.join('')) !==
+			SHA256(__${PID}__PASSWORD_VALUE_AGAIN.join(''))
+		)
+		{
+			EVENT.preventDefault();  // DISABLE PUTTING A NEW LINE
+			LOG(
+				__LANG__[LANG].REGISTER.ERROR.PASSWORD_NOT_SAME.MESSAGE,
+				"ERROR",
+				{
+					TITLE:
+						__LANG__[LANG].REGISTER.ERROR.PASSWORD_NOT_SAME.TITLE
+				},
+				"${PID}"
+			);
+		}
+		else
+		{
+			__${PID}__REGISTER_SIGNAL();
+			EVENT.preventDefault();  // DISABLE PUTTING A NEW LINE
+		}
+	}
+	else
+	{
+		if (EVENT.key.length === 1)
+			__${PID}__PASSWORD_VALUE_AGAIN.push(EVENT.key);
+		else if (EVENT.key === 'Backspace')
+			__${PID}__PASSWORD_VALUE_AGAIN.pop();
+
+		EVENT.preventDefault();
+		TEXTAREA.value = '*'.repeat(__${PID}__PASSWORD_VALUE_AGAIN.length);
+	}
+}
+
+function
+	__${PID}__NAME_EVENT(EVENT)
+{
+	if (EVENT.code === "Enter")
+	{
+		__${PID}__EMAIL_INPUT.focus();
+		EVENT.preventDefault();  // DISABLE PUTTING A NEW LINE
+	}
+}
+
+function
+	__${PID}__EMAIL_EVENT(EVENT)
+{
+	if (EVENT.code === "Enter")
+	{
+		__${PID}__PASSWORD_INPUT.focus();
+		EVENT.preventDefault();  // DISABLE PUTTING A NEW LINE
+	}
+}
+
+</SCRIPT>
+<!-- --------------------------- [^] MODULES [^] --------------------------- -->
