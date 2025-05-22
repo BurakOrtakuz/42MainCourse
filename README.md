@@ -1,97 +1,106 @@
-# ft_printf
+# so_long
 
-> A 42 school project to reimplement the standard C `printf` function with limited features and full manual formatting.
+> A 42 school project to create a simple 2D game using a minimal graphics library.
 
 ## 📚 Description
 
-The `ft_printf` project is a custom implementation of the standard C library's `printf` function. It replicates formatted output to the standard output using a restricted subset of specifiers.
+`so_long` is a basic 2D graphical game developed using the MiniLibX library. The objective is to build a simple game where the player can move around a map, collect items, and reach the exit.
 
 This project teaches:
-- Variadic functions in C (`stdarg.h`)
-- Handling and parsing format strings
-- Converting different data types to string
-- Managing output and memory manually
+- Parsing and validating input files
+- Working with 2D arrays and basic game logic
+- Handling player input (keyboard events)
+- Drawing images with MiniLibX
+- Basic pathfinding validation
+
+## 🎮 Game Overview
+
+The game:
+- Loads a map from a `.ber` file.
+- The player must collect all collectibles (`C`) and reach the exit (`E`).
+- The map is composed of walls (`1`), empty space (`0`), collectibles (`C`), an exit (`E`), and the player start position (`P`).
 
 ## 🛠️ Usage
 
-Include `ft_printf.h` in your code and link your compiled files:
-
-```c
-#include "ft_printf.h"
-
-int main(void)
-{
-    int len;
-
-    len = ft_printf("Hello, %s! The answer is %d\n", "world", 42);
-    ft_printf("Printed %d characters.\n", len);
-    return 0;
-}
-```
-
-## 📄 Function Prototype
-
-```c
-int ft_printf(const char *format, ...);
-```
-
-- **format**: A C string that contains the text to be written, optionally including format specifiers.
-- **...**: A variable number of arguments to format and print.
-- **Returns**: The total number of characters printed.
-
-## ✅ Supported Conversions
-
-The following format specifiers are supported:
-
-| Specifier | Description              |
-|-----------|--------------------------|
-| `%c`      | Character                |
-| `%s`      | String                   |
-| `%p`      | Pointer address          |
-| `%d`      | Signed decimal integer   |
-| `%i`      | Signed decimal integer   |
-| `%u`      | Unsigned decimal integer |
-| `%x`      | Hexadecimal (lowercase)  |
-| `%X`      | Hexadecimal (uppercase)  |
-| `%%`      | A literal percent sign   |
-
-## 🔍 How it works
-
-- Uses `va_start`, `va_arg`, and `va_end` to handle variable arguments.
-- Parses the format string to identify and process specifiers.
-- Converts data types to strings using custom functions.
-- Outputs characters using `write()` for maximum control.
-
-## ⚙️ Compilation
-
-Use the following command to compile:
+Compile the project with the MiniLibX library and run it with a valid map file.
 
 ```bash
-gcc -Wall -Wextra -Werror ft_printf.c ft_printf_utils.c main.c
+make
+./so_long maps/level1.ber
 ```
 
-You may need to adjust the file list depending on how you've split your code.
+## 🎨 Controls
+
+| Key         | Action          |
+|-------------|-----------------|
+| W / ↑       | Move Up         |
+| A / ←       | Move Left       |
+| S / ↓       | Move Down       |
+| D / →       | Move Right      |
+| ESC         | Exit Game       |
+
+## 🗺️ Map Format
+
+- Must be a rectangular grid in a `.ber` file.
+- Must have:
+  - Exactly one `P` (player)
+  - At least one `C` (collectible)
+  - Exactly one `E` (exit)
+- Must be enclosed by walls (`1`)
+- Only valid characters: `01CEP`
+
+### Example:
+```
+111111
+1P0C01
+100001
+1C0E11
+111111
+```
+
+## 🧪 Map Validation
+
+The game performs checks before launching:
+- Is the map rectangular?
+- Are walls surrounding the map?
+- Are all characters valid?
+- Is the map solvable (using pathfinding)?
 
 ## 📁 File Structure
 
 ```
-ft_printf/
-├── ft_printf.c        # Main printf implementation
-├── ft_printf.h        # Header file
-├── ft_printf_utils.c  # Helper functions (e.g., integer/hex conversion)
-├── main.c             # Optional test file
+so_long/
+├── so_long.c           # Main game loop and initialization
+├── map_parser.c        # Map reading and validation
+├── draw.c              # Rendering game elements
+├── input.c             # Handling keyboard inputs
+├── utils.c             # Helpers
+├── so_long.h           # Header file
+├── assets/             # Images for player, wall, collectibles, etc.
+├── maps/               # Sample map files
 ```
 
-## ✅ Features
+## 🖼️ MiniLibX
 
-- Accurate formatted output for supported specifiers
-- Compatible with standard output via `write()`
-- Returns correct character count
-- Handles null strings and pointer values safely
+This project uses the MiniLibX graphics library provided by 42.
+
+## ⚙️ Compilation
+
+Make sure MiniLibX is installed. Then run:
+
+```bash
+make
+```
+
+To clean compiled files:
+
+```bash
+make clean
+```
 
 ## 🚫 Limitations
 
-- Does not support width, precision, or flags (e.g. `%-5s`, `%.2f`)
-- Limited to specifiers listed above
+- No enemy logic or animations
+- Minimal GUI, no audio
 
 ---
