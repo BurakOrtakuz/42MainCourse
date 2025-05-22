@@ -87,7 +87,7 @@ get_next_line/
 ## 🚫 Limitations
 
 - Doesn't support reading from stdin if `BUFFER_SIZE` is very small (can be optimized)
-- Undefined behavior if `read()` is interrupted or returns negative values (e.g., closed file descriptor)
+- Undefined behavior if `read()` is interrupted or returns null (e.g., closed file descriptor)
 
 ---
 
